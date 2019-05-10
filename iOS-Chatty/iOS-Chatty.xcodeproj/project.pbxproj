@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */; };
-		E1FFA9302285E2DC00859A52 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA92F2285E2DC00859A52 /* ViewController.swift */; };
 		E1FFA9332285E2DC00859A52 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1FFA9312285E2DC00859A52 /* Main.storyboard */; };
 		E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA9342285E2DC00859A52 /* iOS_Chatty.xcdatamodeld */; };
 		E1FFA9382285E2DC00859A52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1FFA9372285E2DC00859A52 /* Assets.xcassets */; };
@@ -18,7 +17,6 @@
 /* Begin PBXFileReference section */
 		E1FFA92A2285E2DC00859A52 /* iOS-Chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Chatty.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E1FFA92F2285E2DC00859A52 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1FFA9322285E2DC00859A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1FFA9352285E2DC00859A52 /* iOS_Chatty.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iOS_Chatty.xcdatamodel; sourceTree = "<group>"; };
 		E1FFA9372285E2DC00859A52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,15 +54,62 @@
 		E1FFA92C2285E2DC00859A52 /* iOS-Chatty */ = {
 			isa = PBXGroup;
 			children = (
-				E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */,
-				E1FFA92F2285E2DC00859A52 /* ViewController.swift */,
-				E1FFA9312285E2DC00859A52 /* Main.storyboard */,
+				E1FFA9442285E38A00859A52 /* AppDelegate */,
+				E1FFA9432285E38300859A52 /* Storyboards */,
+				E1FFA9472285E3B500859A52 /* Controller */,
+				E1FFA9462285E3B000859A52 /* View */,
+				E1FFA9452285E3A500859A52 /* Model */,
+				E1FFA9422285E36D00859A52 /* Support */,
+			);
+			path = "iOS-Chatty";
+			sourceTree = "<group>";
+		};
+		E1FFA9422285E36D00859A52 /* Support */ = {
+			isa = PBXGroup;
+			children = (
 				E1FFA9372285E2DC00859A52 /* Assets.xcassets */,
-				E1FFA9392285E2DC00859A52 /* LaunchScreen.storyboard */,
 				E1FFA93C2285E2DC00859A52 /* Info.plist */,
 				E1FFA9342285E2DC00859A52 /* iOS_Chatty.xcdatamodeld */,
 			);
-			path = "iOS-Chatty";
+			path = Support;
+			sourceTree = "<group>";
+		};
+		E1FFA9432285E38300859A52 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				E1FFA9312285E2DC00859A52 /* Main.storyboard */,
+				E1FFA9392285E2DC00859A52 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		E1FFA9442285E38A00859A52 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		E1FFA9452285E3A500859A52 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E1FFA9462285E3B000859A52 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E1FFA9472285E3B500859A52 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +183,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1FFA9302285E2DC00859A52 /* ViewController.swift in Sources */,
 				E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */,
 				E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */,
 			);
@@ -289,6 +333,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQAE768Z9N;
 				INFOPLIST_FILE = "iOS-Chatty/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +341,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "iOSPlayground.iOS-Chatty";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,6 +352,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQAE768Z9N;
 				INFOPLIST_FILE = "iOS-Chatty/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,7 +360,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "iOSPlayground.iOS-Chatty";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
