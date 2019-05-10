@@ -12,6 +12,10 @@
 		E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA9342285E2DC00859A52 /* iOS_Chatty.xcdatamodeld */; };
 		E1FFA9382285E2DC00859A52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1FFA9372285E2DC00859A52 /* Assets.xcassets */; };
 		E1FFA93B2285E2DC00859A52 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1FFA9392285E2DC00859A52 /* LaunchScreen.storyboard */; };
+		E1FFA94A2285EA0500859A52 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA9492285EA0500859A52 /* Constants.swift */; };
+		E1FFA94C2286241D00859A52 /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA94B2286241D00859A52 /* UserListVC.swift */; };
+		E1FFA94E2286243900859A52 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA94D2286243900859A52 /* ChatVC.swift */; };
+		E1FFA9502286246100859A52 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA94F2286246100859A52 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		E1FFA9372285E2DC00859A52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1FFA93A2285E2DC00859A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1FFA93C2285E2DC00859A52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1FFA9492285EA0500859A52 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E1FFA94B2286241D00859A52 /* UserListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
+		E1FFA94D2286243900859A52 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		E1FFA94F2286246100859A52 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,7 @@
 		E1FFA9422285E36D00859A52 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				E1FFA9482285E9DD00859A52 /* Constrants */,
 				E1FFA9372285E2DC00859A52 /* Assets.xcassets */,
 				E1FFA93C2285E2DC00859A52 /* Info.plist */,
 				E1FFA9342285E2DC00859A52 /* iOS_Chatty.xcdatamodeld */,
@@ -108,8 +117,19 @@
 		E1FFA9472285E3B500859A52 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E1FFA94B2286241D00859A52 /* UserListVC.swift */,
+				E1FFA94D2286243900859A52 /* ChatVC.swift */,
+				E1FFA94F2286246100859A52 /* ProfileVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		E1FFA9482285E9DD00859A52 /* Constrants */ = {
+			isa = PBXGroup;
+			children = (
+				E1FFA9492285EA0500859A52 /* Constants.swift */,
+			);
+			path = Constrants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,8 +203,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1FFA9502286246100859A52 /* ProfileVC.swift in Sources */,
 				E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */,
 				E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */,
+				E1FFA94A2285EA0500859A52 /* Constants.swift in Sources */,
+				E1FFA94C2286241D00859A52 /* UserListVC.swift in Sources */,
+				E1FFA94E2286243900859A52 /* ChatVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +356,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQAE768Z9N;
-				INFOPLIST_FILE = "iOS-Chatty/Info.plist";
+				INFOPLIST_FILE = "iOS-Chatty/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -351,7 +375,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQAE768Z9N;
-				INFOPLIST_FILE = "iOS-Chatty/Info.plist";
+				INFOPLIST_FILE = "iOS-Chatty/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
