@@ -9,6 +9,9 @@
 import UIKit
 
 class UserListVC: UIViewController {
+    
+    let database = DataManager.shared
+    var log: ChatLog!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +19,17 @@ class UserListVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func test1(_ sender: Any) {
+        log = database.createChatLog(recipientID: "TESTID")
+        
+        _ = database.createMessage(log: log, sender: "SENDER", body: "TEST BODY", isSent: true)
     }
-    */
-
+    
+    @IBAction func test2(_ sender: Any) {
+        let message = (log.messages?.allObjects as! [Message]).first!
+        print(message.body)
+        print(message.sender)
+    }
+    
+    
 }
