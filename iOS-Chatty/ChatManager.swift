@@ -7,6 +7,7 @@
 //
 
 import CoreBluetooth
+import CoreData
 
 protocol ChatManagerDelegate: class {
     
@@ -14,25 +15,35 @@ protocol ChatManagerDelegate: class {
 
 class ChatManager: NSObject {
     
+    var chatID: String!
     var filter: Set<UUID>!
-    var peripheralManager: CBPeripheralManager!
-    var centralManager: CBCentralManager!
-    var visibleDevices: [Device] = []
-    var cachedDevices: [Device] = []
-    var componentsSet: Set<CBPeripheral> = []
+    private var peripheralManager: CBPeripheralManager!
+    private var centralManager: CBCentralManager!
+    private var visibleDevices: [Device] = []
+    private var cachedDevices: [Device] = []
+    private var componentsSet: Set<CBPeripheral> = []
+    
     weak var delegate: ChatManagerDelegate?
     
     var messageInput = ""
     
-    init(deviceFilter: Set<UUID>) {
+    init(chatID: String, deviceFilter: Set<UUID>) {
         super.init()
+        self.chatID = chatID
         filter = deviceFilter
         peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
         centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
     }
     
-    private func appendMessage(text: String, isSent: Bool) {
+    func sendMessage(text: String) {
+        messageInput = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !messageInput.isEmpty && !componentsSet.isEmpty else { return }
+        for item in componentsSet
+        {
+            centralManager?.connect(item, options: nil)
+        }
         
+        _ = DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
     }
     
     func updateAdvertisingData() {
@@ -70,18 +81,14 @@ extension ChatManager: CBPeripheralDelegate {
         _ peripheral: CBPeripheral,
         didDiscoverCharacteristicsFor service: CBService,
         error: Error?) {
-        // Note: For each peripheral ... write message
+        
         for characteristic in service.characteristics! {
             // MARK: - WRITE AND SEND MESSAGE HERE
             let characteristic = characteristic as CBCharacteristic
             if (characteristic.uuid.isEqual(ChattyBLE.Characteristics.uuid)) {
                 guard messageInput.isEmpty else { return }
                 let data = messageInput.data(using: .utf8)
-                // Write values to a peripheral, can send image too
                 peripheral.writeValue(data!, for: characteristic, type: CBCharacteristicWriteType.withResponse)
-                appendMessage(text: messageInput, isSent: true)
-                // MARK: - SHOULD CLEAR FIELD ON SEND
-                messageInput = ""
             }
         }
     }
@@ -105,12 +112,12 @@ extension ChatManager: CBPeripheralManagerDelegate {
         {
             if let value = request.value {
                 // MARK: - RECEIVING MESSAGE
-                // Check if has image too?
-                peripheral.respond(to: request, withResult: .success)
+                
                 guard let messageText = String(data: value, encoding: String.Encoding.utf8),
                     !messageText.isEmpty else { return }
-                
-                appendMessage(text: messageInput, isSent: false)
+                let sender = request.central.identifier.uuidString
+                peripheral.respond(to: request, withResult: .success)
+                _ = DataManager.shared.createMessage(chatID: chatID, sender: sender, body: messageText, isSent: false)
             }
             
         }
@@ -129,6 +136,7 @@ extension ChatManager: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
+        guard filter.contains(peripheral.identifier) else { return }
         // Constantly running to check for new peripherals
         if peripheral.identifier.description.count > 0 {
             let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey]

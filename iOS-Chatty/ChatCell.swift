@@ -12,15 +12,22 @@ class ChatCell: UITableViewCell {
     
     static let reuseID = "ChatCell"
 
+    @IBOutlet weak var sentLabel: PaddedLabel!
+    @IBOutlet weak var receivedLabel: PaddedLabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        sentLabel.isHidden = true
+        receivedLabel.isHidden = true
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func set(_ message: Message) {
+        if message.isSent {
+            sentLabel.isHidden = false
+            sentLabel.text = message.body
+        } else {
+            receivedLabel.isHidden = false
+            receivedLabel.text = message.body
+        }
     }
-
 }

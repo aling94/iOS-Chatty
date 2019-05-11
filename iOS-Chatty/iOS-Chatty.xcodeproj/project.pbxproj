@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1481A3A2287726000E42110 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1481A392287726000E42110 /* PaddedLabel.swift */; };
+		E1481A3E2287743300E42110 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1481A3D2287743300E42110 /* Views.swift */; };
 		E187C127228677E00022B49D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187C126228677E00022B49D /* DataManager.swift */; };
 		E187C1292286A4D20022B49D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187C1282286A4D20022B49D /* DeviceManager.swift */; };
 		E1B8CB6922872C9C006A3B20 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B8CB6822872C9C006A3B20 /* ChatManager.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1481A392287726000E42110 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = SOURCE_ROOT; };
+		E1481A3D2287743300E42110 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		E187C126228677E00022B49D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = SOURCE_ROOT; };
 		E187C1282286A4D20022B49D /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = SOURCE_ROOT; };
 		E1B8CB6822872C9C006A3B20 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = SOURCE_ROOT; };
@@ -57,6 +61,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1481A3B2287741800E42110 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				E1481A3C2287742300E42110 /* Extensions */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		E1481A3C2287742300E42110 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E1481A3D2287743300E42110 /* Views.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E1FFA9212285E2DC00859A52 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +96,7 @@
 		E1FFA92C2285E2DC00859A52 /* iOS-Chatty */ = {
 			isa = PBXGroup;
 			children = (
+				E1481A3B2287741800E42110 /* Utility */,
 				E1FFA9442285E38A00859A52 /* AppDelegate */,
 				E1FFA9432285E38300859A52 /* Storyboards */,
 				E1FFA9472285E3B500859A52 /* Controller */,
@@ -131,6 +152,7 @@
 			children = (
 				E1B8CB6A22873BBF006A3B20 /* ChatCell.swift */,
 				E1B8CB6C22873BEE006A3B20 /* UserCell.swift */,
+				E1481A392287726000E42110 /* PaddedLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,9 +250,11 @@
 				E1B8CB6D22873BEE006A3B20 /* UserCell.swift in Sources */,
 				E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */,
 				E1B8CB6922872C9C006A3B20 /* ChatManager.swift in Sources */,
+				E1481A3A2287726000E42110 /* PaddedLabel.swift in Sources */,
 				E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */,
 				E1FFA94A2285EA0500859A52 /* Constants.swift in Sources */,
 				E1B8CB6B22873BBF006A3B20 /* ChatCell.swift in Sources */,
+				E1481A3E2287743300E42110 /* Views.swift in Sources */,
 				E1FFA9582286284100859A52 /* User.swift in Sources */,
 				E1FFA94C2286241D00859A52 /* UserListVC.swift in Sources */,
 				E1FFA956228627CE00859A52 /* Device.swift in Sources */,

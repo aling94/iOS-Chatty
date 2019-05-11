@@ -10,6 +10,7 @@ import UIKit
 
 class ChatVC: UIViewController {
 
+    @IBOutlet weak var table: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,4 +28,20 @@ class ChatVC: UIViewController {
     }
     */
 
+}
+
+extension ChatVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatCell.reuseID) as? ChatCell else {
+            return UITableViewCell()
+        }
+        cell.sentLabel.text = "text\n\n\n\n"
+        return cell
+    }
+    
+    
 }

@@ -28,9 +28,6 @@ final class DeviceManager: NSObject {
     init(delegate: DeviceManagerDelegate) {
         super.init()
         self.delegate = delegate
-        peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
-        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
-        startReloads()
     }
     
     var deviceCount: Int { return visibleDevices.count }
@@ -39,8 +36,15 @@ final class DeviceManager: NSObject {
         return visibleDevices[index]
     }
     
+    func begin() {
+        peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
+        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
+        startReloads()
+    }
+    
     func startReloads() {
-        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.clearPeripherals), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 10, target: self,
+                                     selector: #selector(clearPeripherals), userInfo: nil, repeats: true)
     }
     
     func stopReloads() {
@@ -49,7 +53,6 @@ final class DeviceManager: NSObject {
     }
     
     @objc func clearPeripherals(){
-        
         visibleDevices = cachedDevices
         cachedDevices.removeAll()
         delegate?.deviceManagerDidReload()
