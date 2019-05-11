@@ -6,4 +6,151 @@
 //  Copyright © 2019 iOSPlayground. All rights reserved.
 //
 
-import Foundation
+import CoreBluetooth
+
+protocol ChatManagerDelegate: class {
+    
+}
+
+class ChatManager: NSObject {
+    
+    var filter: Set<UUID>!
+    var peripheralManager: CBPeripheralManager!
+    var centralManager: CBCentralManager!
+    var visibleDevices: [Device] = []
+    var cachedDevices: [Device] = []
+    var componentsSet: Set<CBPeripheral> = []
+    weak var delegate: ChatManagerDelegate?
+    
+    var messageInput = ""
+    
+    init(deviceFilter: Set<UUID>) {
+        super.init()
+        filter = deviceFilter
+        peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
+        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
+    }
+    
+    private func appendMessage(text: String, isSent: Bool) {
+        
+    }
+    
+    func updateAdvertisingData() {
+        if (peripheralManager.isAdvertising) {
+            peripheralManager.stopAdvertising()
+        }
+        
+        let user = User.current
+        let advertisementData = String(format: "%@|%d|%d", user.name, user.avatarID, user.colorID)
+        
+        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID], CBAdvertisementDataLocalNameKey: advertisementData])
+    }
+    
+    
+    func initService() {
+        let serialService = CBMutableService(type: ChattyBLE.serviceUUID, primary: true)
+        serialService.characteristics = [CBMutableCharacteristic(type: ChattyBLE.Characteristics.uuid,
+                                                                 properties: ChattyBLE.Characteristics.properties,
+                                                                 value: nil, permissions: ChattyBLE.Characteristics.permissions)]
+        peripheralManager.add(serialService)
+    }
+}
+
+extension ChatManager: CBPeripheralDelegate {
+    
+    func peripheral( _ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if componentsSet.contains(peripheral) {
+            for service in peripheral.services! {
+                peripheral.discoverCharacteristics(nil, for: service)
+            }
+        }
+    }
+    
+    func peripheral(
+        _ peripheral: CBPeripheral,
+        didDiscoverCharacteristicsFor service: CBService,
+        error: Error?) {
+        // Note: For each peripheral ... write message
+        for characteristic in service.characteristics! {
+            // MARK: - WRITE AND SEND MESSAGE HERE
+            let characteristic = characteristic as CBCharacteristic
+            if (characteristic.uuid.isEqual(ChattyBLE.Characteristics.uuid)) {
+                guard messageInput.isEmpty else { return }
+                let data = messageInput.data(using: .utf8)
+                // Write values to a peripheral, can send image too
+                peripheral.writeValue(data!, for: characteristic, type: CBCharacteristicWriteType.withResponse)
+                appendMessage(text: messageInput, isSent: true)
+                // MARK: - SHOULD CLEAR FIELD ON SEND
+                messageInput = ""
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        print("write here")
+    }
+}
+
+extension ChatManager: CBPeripheralManagerDelegate {
+    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+        
+        if (peripheral.state == .poweredOn){
+            initService()
+            updateAdvertisingData()
+        }
+    }
+    
+    func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+        for request in requests
+        {
+            if let value = request.value {
+                // MARK: - RECEIVING MESSAGE
+                // Check if has image too?
+                peripheral.respond(to: request, withResult: .success)
+                guard let messageText = String(data: value, encoding: String.Encoding.utf8),
+                    !messageText.isEmpty else { return }
+                
+                appendMessage(text: messageInput, isSent: false)
+            }
+            
+        }
+    }
+}
+
+extension ChatManager: CBCentralManagerDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        
+        if (central.state == .poweredOn){
+            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID],
+                                       options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        // Constantly running to check for new peripherals
+        if peripheral.identifier.description.count > 0 {
+            let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey]
+            if advertisementName != nil {
+                let ad = advertisementName as! String
+                let components = ad.components(separatedBy: "|")
+                if components.count == 3 {
+                    componentsSet.insert(peripheral)
+                }
+                print(componentsSet, "----------------\n")
+            }
+            
+        }
+    }
+    
+    
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        // Gets called for several existing peripherals
+        if componentsSet.contains(peripheral) {
+            peripheral.delegate = self
+            peripheral.discoverServices(nil)
+        }
+    }
+    
+}

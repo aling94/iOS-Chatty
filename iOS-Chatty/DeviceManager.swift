@@ -16,15 +16,13 @@ final class DeviceManager: NSObject {
     
     var peripheralManager: CBPeripheralManager!
     var centralManager: CBCentralManager!
-    var filter: Set<UUID>!
     var visibleDevices: [Device] = []
     var cachedDevices: [Device] = []
     var cachedPeripheralNames: [String : String] = [:]
     weak var delegate: DeviceManagerDelegate?
     
-    init(deviceFilter: Set<UUID>) {
+    override init() {
         super.init()
-        filter = deviceFilter
         peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
         centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
     }
@@ -76,18 +74,16 @@ extension DeviceManager: CBPeripheralManagerDelegate {
 extension DeviceManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn
-        {
-            self.centralManager?.scanForPeripherals(withServices: [ChattyBLE.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
+        if central.state == .poweredOn {
+            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID],
+                                       options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
         }
     }
     
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber)
-    {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         var peripheralName = cachedPeripheralNames[peripheral.identifier.description] ?? "Unknown"
-        if let advertisementname = advertisementData[CBAdvertisementDataLocalNameKey] as? String
-        {
+        if let advertisementname = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             peripheralName = advertisementname
             cachedPeripheralNames[peripheral.identifier.description] = peripheralName
         }
@@ -96,6 +92,4 @@ extension DeviceManager: CBCentralManagerDelegate {
         self.addOrUpdatePeripheralList(device: device, list: &visibleDevices)
         self.addOrUpdatePeripheralList(device: device, list: &cachedDevices)
     }
-    
-    
 }
