@@ -16,6 +16,4 @@ struct ChattyBLE {
         static let properties: CBCharacteristicProperties = .write
         static let permissions: CBAttributePermissions = .writeable
     }
-    
-    
 }

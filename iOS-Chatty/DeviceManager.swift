@@ -10,21 +10,49 @@ import CoreBluetooth
 
 protocol DeviceManagerDelegate: class {
     func deviceManager(didAddNewPeripheral: Device)
+    func deviceManagerDidUpdateDeviceName(at index: Int)
+    func deviceManagerDidReload()
 }
 
 final class DeviceManager: NSObject {
     
-    var peripheralManager: CBPeripheralManager!
-    var centralManager: CBCentralManager!
-    var visibleDevices: [Device] = []
-    var cachedDevices: [Device] = []
-    var cachedPeripheralNames: [String : String] = [:]
+    private var peripheralManager: CBPeripheralManager!
+    private var centralManager: CBCentralManager!
+    private var visibleDevices: [Device] = []
+    private var cachedDevices: [Device] = []
+    private var cachedPeripheralNames: [String : String] = [:]
     weak var delegate: DeviceManagerDelegate?
     
-    override init() {
+    var timer: Timer!
+    
+    init(delegate: DeviceManagerDelegate) {
         super.init()
+        self.delegate = delegate
         peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
         centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
+        startReloads()
+    }
+    
+    var deviceCount: Int { return visibleDevices.count }
+    
+    func device(at index: Int) -> Device {
+        return visibleDevices[index]
+    }
+    
+    func startReloads() {
+        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.clearPeripherals), userInfo: nil, repeats: true)
+    }
+    
+    func stopReloads() {
+        timer.invalidate()
+        timer = nil
+    }
+    
+    @objc func clearPeripherals(){
+        
+        visibleDevices = cachedDevices
+        cachedDevices.removeAll()
+        delegate?.deviceManagerDidReload()
     }
     
     private func updateAdvertisingData() {
@@ -42,6 +70,7 @@ final class DeviceManager: NSObject {
     private func addOrUpdatePeripheralList(device: Device, list: inout [Device]) {
         
         if !list.contains(where: { $0.peripheral.identifier == device.peripheral.identifier }) {
+            
             list.append(device)
             delegate?.deviceManager(didAddNewPeripheral: device)
         }
@@ -51,14 +80,13 @@ final class DeviceManager: NSObject {
             for index in 0..<list.count {
                 if (list[index].peripheral.identifier == device.peripheral.identifier) {
                     list[index].name = device.name
+                    delegate?.deviceManagerDidUpdateDeviceName(at: index)
                     break
                 }
             }
             
         }
     }
-    
-    
 }
 
 extension DeviceManager: CBPeripheralManagerDelegate {
@@ -67,8 +95,6 @@ extension DeviceManager: CBPeripheralManagerDelegate {
             updateAdvertisingData()
         }
     }
-    
-    
 }
 
 extension DeviceManager: CBCentralManagerDelegate {

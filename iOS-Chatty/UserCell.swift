@@ -10,4 +10,12 @@ import UIKit
 
 class UserCell: UICollectionViewCell {
     static let reuseID = "UserCell"
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    func set(_ deviceInfo: Device) {
+        nameLabel.text = deviceInfo.name
+    }
 }

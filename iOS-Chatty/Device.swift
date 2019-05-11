@@ -18,4 +18,8 @@ struct Device {
         self.peripheral = peripheral
         self.name = name
     }
+    
+    static func <(left: Device, right: Device) -> Bool {
+        return left.name < right.name
+    }
 }

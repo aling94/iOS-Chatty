@@ -10,29 +10,74 @@ import UIKit
 
 class UserListVC: UIViewController {
     
-    var timer: Timer!
+    @IBOutlet weak var collection: UICollectionView!
     
-    
-    let database = DataManager.shared
-    var log: ChatLog!
+    var dm: DeviceManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        dm = DeviceManager(delegate: self)
+    }
+}
 
-        // Do any additional setup after loading the view.
+extension UserListVC: DeviceManagerDelegate {
+    
+    func deviceManager(didAddNewPeripheral: Device) {
+        let lastItem = IndexPath(item: self.dm.deviceCount - 1, section: 0)
+        DispatchQueue.main.async {
+            self.collection.insertItems(at: [lastItem])
+        }
     }
     
-    @IBAction func test1(_ sender: Any) {
-        log = database.createChatLog(recipientID: "TESTID")
-        
-        _ = database.createMessage(log: log, sender: "SENDER", body: "TEST BODY", isSent: true)
+    func deviceManagerDidUpdateDeviceName(at index: Int) {
+        DispatchQueue.main.async {
+            guard let cell = self.collection.cellForItem(at: IndexPath(item: index, section: 0)) as? UserCell
+                else { return }
+            
+            cell.set(self.dm.device(at: index))
+        }
     }
     
-    @IBAction func test2(_ sender: Any) {
-        let message = (log.messages?.allObjects as! [Message]).first!
-        print(message.body)
-        print(message.sender)
+    func deviceManagerDidReload() {
+        DispatchQueue.main.async {
+            self.collection.reloadData()
+        }
+    }
+}
+
+extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseID, for: indexPath) as? UserCell
+            else {
+                return UICollectionViewCell()
+        }
+//        cell.set(dm.device(at: indexPath.item))
+        return cell
     }
     
     
+}
+
+extension UserListVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = (collectionView.bounds.size.width / 2) - 15
+        return CGSize(width: size, height: size + 25)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
 }
