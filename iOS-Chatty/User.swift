@@ -10,22 +10,25 @@ import Foundation
 
 class User {
     
-    private let currentUserKey = "currentUser"
-    
-    static let current = User()
-    
-    init() {
-        if let dictionary = UserDefaults.standard.dictionary(forKey: currentUserKey) {
-            
-            name = dictionary["name"] as? String ?? ""
-            avatarID = dictionary["avatarId"] as? Int ?? 0
-            colorID = dictionary["colorId"] as? Int ?? 0
-        }
-    }
-    
     var name = ""
     var colorID = 0
     var avatarID = 0
+    
+    private static let currentUserKey = "currentUser"
+    
+    static let current: User = {
+        let user = User()
+        if let dictionary = UserDefaults.standard.dictionary(forKey: currentUserKey) {
+            
+            user.name = dictionary["name"] as? String ?? ""
+            user.avatarID = dictionary["avatarId"] as? Int ?? 0
+            user.colorID = dictionary["colorId"] as? Int ?? 0
+        }
+        return user
+    }()
+
+    
+    
     
     
 }

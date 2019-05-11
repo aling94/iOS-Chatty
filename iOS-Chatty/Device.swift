@@ -13,4 +13,9 @@ struct Device {
     var peripheral : CBPeripheral
     var name : String
     var messages : [String] = []
+    
+    init(peripheral: CBPeripheral, name: String) {
+        self.peripheral = peripheral
+        self.name = name
+    }
 }

@@ -10,6 +10,9 @@ import UIKit
 
 class UserListVC: UIViewController {
     
+    var timer: Timer!
+    
+    
     let database = DataManager.shared
     var log: ChatLog!
 
