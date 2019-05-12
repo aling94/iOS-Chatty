@@ -16,6 +16,7 @@ class UserListVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collection.allowsMultipleSelection = true
         dm = DeviceManager(delegate: self)
         dm.begin()
     }
@@ -39,11 +40,12 @@ extension UserListVC: DeviceManagerDelegate {
     
     func deviceManagerDidUpdateDeviceDesc(at index: Int) {
         DispatchQueue.main.async {
-            self.collection.reloadData()
-//            guard let cell = self.collection.cellForItem(at: IndexPath(item: index, section: 0)) as? UserCell
-//                else { return }
-//
-//            cell.set(self.dm.device(at: index))
+//            self.collection.reloadData()
+            let indexPath = IndexPath(item: index, section: 0)
+            guard let cell = self.collection.cellForItem(at: indexPath) as? UserCell else { return }
+
+            cell.set(self.dm.device(at: index))
+            self.collection.reloadItems(at: [indexPath])
         }
     }
     
