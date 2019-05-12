@@ -34,6 +34,10 @@ struct Device {
         }
     }
     
+    var uuid: UUID {
+        return peripheral.identifier
+    }
+    
     static func <(left: Device, right: Device) -> Bool {
         return left.user.name < right.user.name
     }

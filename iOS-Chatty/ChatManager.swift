@@ -17,6 +17,7 @@ class ChatManager: NSObject {
     
     var chatID: String!
     var filter: Set<UUID>!
+    var names: String!
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
     private var visibleDevices: [Device] = []
@@ -27,10 +28,11 @@ class ChatManager: NSObject {
     
     var messageInput = ""
     
-    init(deviceFilter: Set<UUID>) {
+    init(devices: [Device]) {
         super.init()
-        filter = deviceFilter
-        chatID = deviceFilter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
+        filter = Set<UUID>(devices.map({$0.uuid}))
+        names = devices.map({$0.user.name}).joined(separator: "|")
+        chatID = filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
     }
     
     func messageFRC(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<Message> {
@@ -83,28 +85,23 @@ extension ChatManager : CBCentralManagerDelegate {
         
         if (central.state == .poweredOn) {
             
-            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID],
+                                       options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-        guard filter.contains(peripheral.identifier) else { return }
-        if peripheral.identifier.description.count > 0 {
-            let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey]
-            if advertisementName != nil {
-                let ad = advertisementName as! String
-                let components = ad.components(separatedBy: "|")
-                if components.count == 3 {
-                    peripheralSet.insert(peripheral)
-                }
-                print(peripheralSet)
-                print("----------------")
-                
-            }
-            
+        guard filter.contains(peripheral.identifier),
+            peripheral.identifier.description.count > 0,
+            let adName = advertisementData[CBAdvertisementDataLocalNameKey] as? String else { return }
+        
+        let components = adName.components(separatedBy: "|")
+        if components.count == 3 {
+            peripheralSet.insert(peripheral)
         }
+        print(peripheralSet, "----------------\n")
     }
     
     

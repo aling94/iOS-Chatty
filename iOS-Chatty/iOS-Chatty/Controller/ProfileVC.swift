@@ -15,6 +15,7 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Profile"
         nameField.text = User.current.name
         avatarImage.image = UIImage.avatar(id: User.current.avatarID)
     }

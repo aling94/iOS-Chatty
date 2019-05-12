@@ -15,7 +15,7 @@ extension UIView {
         
         set {
             layer.cornerRadius = newValue
-            layer.masksToBounds = newValue > 0
+//            layer.masksToBounds = newValue > 0
         }
     }
     
@@ -24,7 +24,7 @@ extension UIView {
         
         set {
             layer.borderWidth = newValue
-            layer.masksToBounds = newValue > 0
+//            layer.masksToBounds = newValue > 0
         }
     }
     
@@ -32,5 +32,10 @@ extension UIView {
         get { return UIColor(cgColor: layer.borderColor!) }
         
         set { layer.borderColor = newValue.cgColor }
+    }
+    
+    @IBInspectable var clipToBounds: Bool {
+        get { return clipsToBounds }
+        set { clipsToBounds = newValue }
     }
 }

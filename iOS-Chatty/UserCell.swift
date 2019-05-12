@@ -24,7 +24,7 @@ class UserCell: UICollectionViewCell {
     
     func select() {
         contentView.borderWidth = 2.5
-        contentView.borderColor = .blue
+        contentView.borderColor = .white
     }
     
     func deselect() {

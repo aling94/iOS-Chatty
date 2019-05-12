@@ -43,12 +43,13 @@ final class DeviceManager: NSObject {
     }
     
     func startReloads() {
+        timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 10, target: self,
                                      selector: #selector(clearPeripherals), userInfo: nil, repeats: true)
     }
     
     func stopReloads() {
-        timer.invalidate()
+        timer?.invalidate()
         timer = nil
     }
     

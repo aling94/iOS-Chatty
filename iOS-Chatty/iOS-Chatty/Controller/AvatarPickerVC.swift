@@ -15,6 +15,7 @@ class AvatarPickerVC: UIViewController {
     @IBOutlet weak var collection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Avatar Selection"
     }
 
 
