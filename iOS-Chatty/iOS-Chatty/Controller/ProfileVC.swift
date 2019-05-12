@@ -12,6 +12,7 @@ class ProfileVC: UIViewController {
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var avatarImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nameField.text = User.current.name
@@ -30,6 +31,7 @@ class ProfileVC: UIViewController {
         }
     }
     
+    //  MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let vc = segue.destination as? AvatarPickerVC else { return }
         vc.selectAction = { [unowned self] avatarID in

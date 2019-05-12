@@ -92,6 +92,7 @@ final class DeviceManager: NSObject {
     }
 }
 
+//  MARK: - CBPeripheralManagerDelegate
 extension DeviceManager: CBPeripheralManagerDelegate {
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         if peripheral.state == .poweredOn {
@@ -100,6 +101,7 @@ extension DeviceManager: CBPeripheralManagerDelegate {
     }
 }
 
+//  MARK: - CBCentralManagerDelegate
 extension DeviceManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {

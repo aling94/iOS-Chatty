@@ -37,7 +37,10 @@ class ChatVC: UIViewController {
         cm.sendMessage(text: inputField.text!)
         inputField.text = ""
     }
+}
 
+//  MARK: - Observers
+extension ChatVC {
     func observeKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -72,6 +75,7 @@ class ChatVC: UIViewController {
     }
 }
 
+//  MARK: - UITextFieldDelegate
 extension ChatVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -80,7 +84,7 @@ extension ChatVC: UITextFieldDelegate {
     }
 }
 
-
+//  MARK: - UITableViewDataSource
 extension ChatVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return frc.fetchedObjects?.count ?? 0
@@ -99,6 +103,7 @@ extension ChatVC: UITableViewDataSource {
     }
 }
 
+//  MARK: - NSFetchedResultsControllerDelegate
 extension ChatVC: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         table.beginUpdates()

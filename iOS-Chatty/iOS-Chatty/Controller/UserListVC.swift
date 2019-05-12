@@ -29,6 +29,7 @@ class UserListVC: UIViewController {
     }
 }
 
+//  MARK: - DeviceManagerDelegate
 extension UserListVC: DeviceManagerDelegate {
     
     func deviceManager(didAddNewPeripheral: Device) {
@@ -56,6 +57,8 @@ extension UserListVC: DeviceManagerDelegate {
     }
 }
 
+
+//  MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,6 +86,7 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
 }
 
+//  MARK: - UICollectionViewDelegateFlowLayout
 extension UserListVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = (collectionView.bounds.size.width / 2) - 15

@@ -78,6 +78,7 @@ class ChatManager: NSObject {
     }
 }
 
+//  MARK: - CBCentralManagerDelegate
 extension ChatManager : CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -122,6 +123,7 @@ extension ChatManager : CBCentralManagerDelegate {
     }
 }
 
+//  MARK: - CBPeripheralDelegate
 extension ChatManager : CBPeripheralDelegate {
     
     func peripheral( _ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -136,7 +138,6 @@ extension ChatManager : CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for characteristic in service.characteristics! {
-            // MARK: - WRITE AND SEND MESSAGE HERE
             let characteristic = characteristic as CBCharacteristic
             if (characteristic.uuid.isEqual(ChattyBLE.Characteristics.uuid)) {
                 guard !messageInput.isEmpty else { return }
@@ -153,6 +154,7 @@ extension ChatManager : CBPeripheralDelegate {
     }
 }
 
+//  MARK: - CBPeripheralManagerDelegate
 extension ChatManager : CBPeripheralManagerDelegate {
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {

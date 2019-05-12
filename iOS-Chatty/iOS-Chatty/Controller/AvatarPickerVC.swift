@@ -20,6 +20,7 @@ class AvatarPickerVC: UIViewController {
 
 }
 
+//  MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 extension AvatarPickerVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -41,6 +42,7 @@ extension AvatarPickerVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
 }
 
+//  MARK: - UICollectionViewDelegateFlowLayout
 extension AvatarPickerVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = (collectionView.bounds.size.width / 2) - 50
