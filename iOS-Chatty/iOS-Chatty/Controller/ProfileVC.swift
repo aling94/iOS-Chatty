@@ -21,7 +21,7 @@ class ProfileVC: UIViewController {
         if let name = nameField.text, !name.isEmpty {
             User.current.name = name
             User.current.save()
-            
+            navigationController?.popViewController(animated: true)
         }
     }
 }
