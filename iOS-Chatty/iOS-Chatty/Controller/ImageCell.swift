@@ -12,7 +12,7 @@ class ImageCell: UICollectionViewCell {
     static let reuseID = "ImageCell"
     @IBOutlet weak var imageView: UIImageView!
     
-    func setAvatarImage(index: Int) {
-        imageView.image = UIImage(named: "\(Constants.avatarPrefix)\(index)")
+    func setAvatarImage(id: Int) {
+        imageView.image = UIImage.avatar(id: id)
     }
 }

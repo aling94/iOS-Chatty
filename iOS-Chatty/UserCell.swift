@@ -18,6 +18,6 @@ class UserCell: UICollectionViewCell {
     func set(_ deviceInfo: Device) {
         let userInfo = deviceInfo.user
         nameLabel.text = userInfo.name
-        imageView.image = UIImage(named: "\(Constants.avatarPrefix)\(userInfo.avatarID)")
+        imageView.image = UIImage.avatar(id: userInfo.avatarID)
     }
 }

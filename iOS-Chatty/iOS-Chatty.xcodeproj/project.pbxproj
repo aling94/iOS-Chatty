@@ -16,6 +16,8 @@
 		E1B8CB6D22873BEE006A3B20 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B8CB6C22873BEE006A3B20 /* UserCell.swift */; };
 		E1F0E19122886BF000703670 /* AvatarPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0E19022886BF000703670 /* AvatarPickerVC.swift */; };
 		E1F0E19322887C2E00703670 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0E19222887C2E00703670 /* ImageCell.swift */; };
+		E1F0E195228880C800703670 /* ImageViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0E194228880C800703670 /* ImageViews.swift */; };
+		E1F0E197228883BB00703670 /* ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0E196228883BB00703670 /* ViewControllers.swift */; };
 		E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */; };
 		E1FFA9332285E2DC00859A52 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1FFA9312285E2DC00859A52 /* Main.storyboard */; };
 		E1FFA9362285E2DC00859A52 /* iOS_Chatty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1FFA9342285E2DC00859A52 /* iOS_Chatty.xcdatamodeld */; };
@@ -39,6 +41,8 @@
 		E1B8CB6C22873BEE006A3B20 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = SOURCE_ROOT; };
 		E1F0E19022886BF000703670 /* AvatarPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerVC.swift; sourceTree = "<group>"; };
 		E1F0E19222887C2E00703670 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCell.swift; path = "iOS-Chatty/Controller/ImageCell.swift"; sourceTree = SOURCE_ROOT; };
+		E1F0E194228880C800703670 /* ImageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViews.swift; sourceTree = "<group>"; };
+		E1F0E196228883BB00703670 /* ViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers.swift; sourceTree = "<group>"; };
 		E1FFA92A2285E2DC00859A52 /* iOS-Chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Chatty.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1FFA9322285E2DC00859A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -77,6 +81,8 @@
 			isa = PBXGroup;
 			children = (
 				E1481A3D2287743300E42110 /* Views.swift */,
+				E1F0E194228880C800703670 /* ImageViews.swift */,
+				E1F0E196228883BB00703670 /* ViewControllers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F0E197228883BB00703670 /* ViewControllers.swift in Sources */,
 				E1FFA9502286246100859A52 /* ProfileVC.swift in Sources */,
 				E1B8CB6D22873BEE006A3B20 /* UserCell.swift in Sources */,
 				E1FFA92E2285E2DC00859A52 /* AppDelegate.swift in Sources */,
@@ -266,6 +273,7 @@
 				E1FFA9582286284100859A52 /* User.swift in Sources */,
 				E1FFA94C2286241D00859A52 /* UserListVC.swift in Sources */,
 				E1FFA956228627CE00859A52 /* Device.swift in Sources */,
+				E1F0E195228880C800703670 /* ImageViews.swift in Sources */,
 				E187C1292286A4D20022B49D /* DeviceManager.swift in Sources */,
 				E187C127228677E00022B49D /* DataManager.swift in Sources */,
 				E1FFA94E2286243900859A52 /* ChatVC.swift in Sources */,

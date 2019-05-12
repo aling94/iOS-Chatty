@@ -29,7 +29,7 @@ extension AvatarPickerVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseID, for: indexPath) as? ImageCell
         else { return UICollectionViewCell() }
-        cell.setAvatarImage(index: indexPath.item + 1)
+        cell.setAvatarImage(id: indexPath.item + 1)
         return cell
     }
     
