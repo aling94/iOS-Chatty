@@ -39,3 +39,14 @@ extension UIView {
         set { clipsToBounds = newValue }
     }
 }
+
+extension UIColor {
+    
+    static var lightBlue: UIColor {
+        return UIColor(red: 0, green: 122/255.0, blue: 1, alpha: 1)
+    }
+    
+    static var lightGreen: UIColor {
+        return UIColor(red: 91/255.0, green: 185/255.0, blue: 116/255.0, alpha: 1)
+    }
+}

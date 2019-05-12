@@ -15,12 +15,15 @@ class ChatVC: UIViewController {
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var inputField: UITextField!
     @IBOutlet weak var textFieldBottom: NSLayoutConstraint!
+    @IBOutlet weak var sendBtn: UIButton!
     
     var frc: NSFetchedResultsController<Message>!
     var cm: ChatManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = cm.names
+        toggleSendBtn(enabled: false)
         frc = cm.messageFRC(delegate: self)
         try? frc.performFetch()
         cm.begin()
@@ -31,11 +34,17 @@ class ChatVC: UIViewController {
         super.viewWillDisappear(animated)
         removeKeyboardObserver()
     }
+    
+    func toggleSendBtn(enabled: Bool) {
+        sendBtn.isEnabled = enabled
+        sendBtn.setTitleColor(enabled ? .lightBlue : .gray, for: .normal)
+    }
 
     @IBAction func sendTapped(_ sender: Any) {
         view.endEditing(true)
         cm.sendMessage(text: inputField.text!)
         inputField.text = ""
+        toggleSendBtn(enabled: false)
     }
 }
 
@@ -77,6 +86,12 @@ extension ChatVC {
 
 //  MARK: - UITextFieldDelegate
 extension ChatVC: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let enabled = !(textField.text! + string).isEmpty
+        toggleSendBtn(enabled: enabled)
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

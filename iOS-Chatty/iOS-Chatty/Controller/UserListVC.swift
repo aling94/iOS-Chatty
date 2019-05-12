@@ -11,6 +11,7 @@ import UIKit
 class UserListVC: UIViewController {
     
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var chatBtn: UIButton!
     
     var dm: DeviceManager!
     var selectedItems: Set<IndexPath> = []
@@ -26,12 +27,18 @@ class UserListVC: UIViewController {
         
         super.viewWillAppear(animated)
         navigationItem.title = User.current.name
+        toggleChatBtn(enabled: false)
         dm.updateAdvertisingData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         deselectAll()
+    }
+    
+    func toggleChatBtn(enabled: Bool) {
+        chatBtn.isEnabled = enabled
+        chatBtn.backgroundColor = enabled ? .lightGreen : .lightGray
     }
     
     @IBAction func chatTapped(_ sender: Any) {

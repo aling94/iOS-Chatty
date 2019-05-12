@@ -149,6 +149,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatBtn" destination="8cr-a2-zaX" id="ky6-qo-Zng"/>
                         <outlet property="collection" destination="TaD-6k-E3z" id="6sD-ri-eLt"/>
                     </connections>
                 </viewController>
@@ -325,7 +326,9 @@
                                             <constraint firstAttribute="height" constant="30" id="4BT-DY-3Tr"/>
                                             <constraint firstAttribute="width" constant="40" id="Ja6-22-UDj"/>
                                         </constraints>
-                                        <state key="normal" title="Send"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="sendTapped:" destination="Yfr-ix-biu" eventType="touchUpInside" id="Zl4-0L-T6l"/>
                                         </connections>
@@ -371,6 +374,7 @@
                     </view>
                     <connections>
                         <outlet property="inputField" destination="PBS-F9-aOT" id="dTQ-4u-hDi"/>
+                        <outlet property="sendBtn" destination="mQq-2Q-STD" id="y1m-xr-l1z"/>
                         <outlet property="table" destination="0jg-78-ynf" id="dpB-2X-GGW"/>
                         <outlet property="textFieldBottom" destination="686-C2-izr" id="4qg-oG-jDq"/>
                     </connections>
