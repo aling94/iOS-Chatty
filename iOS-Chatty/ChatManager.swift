@@ -47,14 +47,12 @@ class ChatManager: NSObject {
     func sendMessage(text: String) {
         messageInput = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !messageInput.isEmpty && !peripheralSet.isEmpty else { return }
-        for item in peripheralSet
-        {
+        for item in peripheralSet {
             centralManager?.connect(item, options: nil)
         }
     }
     
-    func updateAdvertisingData()
-    {
+    func updateAdvertisingData() {
         if (peripheralManager.isAdvertising) {
             peripheralManager.stopAdvertising()
         }
@@ -83,7 +81,7 @@ extension ChatManager : CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
-        if (central.state == .poweredOn){
+        if (central.state == .poweredOn) {
             
             central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
@@ -93,15 +91,12 @@ extension ChatManager : CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         guard filter.contains(peripheral.identifier) else { return }
-        if peripheral.identifier.description.count > 0
-        {
+        if peripheral.identifier.description.count > 0 {
             let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey]
-            if advertisementName != nil
-            {
+            if advertisementName != nil {
                 let ad = advertisementName as! String
                 let components = ad.components(separatedBy: "|")
-                if components.count == 3
-                {
+                if components.count == 3 {
                     peripheralSet.insert(peripheral)
                 }
                 print(peripheralSet)
@@ -113,10 +108,8 @@ extension ChatManager : CBCentralManagerDelegate {
     }
     
     
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral)
-    {
-        if peripheralSet.contains(peripheral)
-        {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        if peripheralSet.contains(peripheral) {
             peripheral.delegate = self
             peripheral.discoverServices(nil)
         }
@@ -127,8 +120,7 @@ extension ChatManager : CBCentralManagerDelegate {
 extension ChatManager : CBPeripheralDelegate {
     
     func peripheral( _ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if peripheralSet.contains(peripheral)
-        {
+        if peripheralSet.contains(peripheral) {
             for service in peripheral.services! {
                 
                 peripheral.discoverCharacteristics(nil, for: service)
@@ -159,7 +151,7 @@ extension ChatManager : CBPeripheralManagerDelegate {
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         
-        if (peripheral.state == .poweredOn){
+        if (peripheral.state == .poweredOn) {
             
             initService()
             updateAdvertisingData()
@@ -167,8 +159,7 @@ extension ChatManager : CBPeripheralManagerDelegate {
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
-        for request in requests
-        {
+        for request in requests{
             if let value = request.value {
                 peripheral.respond(to: request, withResult: .success)
                 let messageText = String(data: value, encoding: String.Encoding.utf8)!

@@ -52,7 +52,7 @@ final class DeviceManager: NSObject {
         timer = nil
     }
     
-    @objc func clearPeripherals(){
+    @objc func clearPeripherals() {
         visibleDevices = cachedDevices
         cachedDevices.removeAll()
         delegate?.deviceManagerDidReload()
