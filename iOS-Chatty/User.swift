@@ -8,13 +8,14 @@
 
 import Foundation
 
+fileprivate let currentUserKey = "currentUser"
+
 class User {
     
     var name = "Unknown"
     var colorID = 0
     var avatarID = 0
     
-    private static let currentUserKey = "currentUser"
     
     static let current: User = {
         let user = User()
@@ -27,7 +28,10 @@ class User {
         return user
     }()
 
-    
+    func save() {
+        let dictionary : Dictionary<String, Any> = ["name": name, "avatarId": avatarID, "colorId": colorID]
+        UserDefaults.standard.set(dictionary, forKey: currentUserKey)
+    }
     
     
     

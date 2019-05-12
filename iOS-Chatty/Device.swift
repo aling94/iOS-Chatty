@@ -17,7 +17,7 @@ struct Device {
     
     init(peripheral: CBPeripheral, peripheralDesc: String) {
         self.peripheral = peripheral
-        update(desc: desc)
+        update(desc: peripheralDesc)
     }
     
     mutating func update(desc: String) {

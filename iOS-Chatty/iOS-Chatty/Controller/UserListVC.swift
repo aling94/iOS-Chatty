@@ -19,23 +19,30 @@ class UserListVC: UIViewController {
         dm = DeviceManager(delegate: self)
         dm.begin()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        dm.updateAdvertisingData()
+    }
 }
 
 extension UserListVC: DeviceManagerDelegate {
     
     func deviceManager(didAddNewPeripheral: Device) {
 //        let lastItem = IndexPath(item: self.dm.deviceCount - 1, section: 0)
-//        DispatchQueue.main.async {
-//            self.collection.insertItems(at: [lastItem])
-//        }
+        DispatchQueue.main.async {
+            self.collection.reloadData()
+        }
     }
     
     func deviceManagerDidUpdateDeviceDesc(at index: Int) {
         DispatchQueue.main.async {
-            guard let cell = self.collection.cellForItem(at: IndexPath(item: index, section: 0)) as? UserCell
-                else { return }
-
-            cell.set(self.dm.device(at: index))
+            self.collection.reloadData()
+//            guard let cell = self.collection.cellForItem(at: IndexPath(item: index, section: 0)) as? UserCell
+//                else { return }
+//
+//            cell.set(self.dm.device(at: index))
         }
     }
     
@@ -59,6 +66,15 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
         }
         cell.set(dm.device(at: indexPath.item))
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatVC.self)) as? ChatVC
+            else { return }
+        var filter: Set<UUID> = []
+        filter.insert(dm.device(at: indexPath.item).peripheral.identifier)
+        vc.cm = ChatManager(deviceFilter: filter)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

@@ -37,8 +37,8 @@ final class DeviceManager: NSObject {
     }
     
     func begin() {
-        peripheralManager = CBPeripheralManager(delegate: self, queue: DispatchQueue.global())
-        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global())
+        peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
         startReloads()
     }
     
@@ -58,7 +58,7 @@ final class DeviceManager: NSObject {
         delegate?.deviceManagerDidReload()
     }
     
-    private func updateAdvertisingData() {
+    func updateAdvertisingData() {
         
         if (peripheralManager.isAdvertising) {
             peripheralManager.stopAdvertising()
