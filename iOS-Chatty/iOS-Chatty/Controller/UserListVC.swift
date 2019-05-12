@@ -88,8 +88,21 @@ extension UserListVC: DeviceManagerDelegate {
 //  MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dm.deviceCount
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseID, for: indexPath) as? UserCell
+            else {
+                return UICollectionViewCell()
+        }
+        cell.set(dm.device(at: indexPath.item))
+        return cell
+    }
+
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dm.deviceCount
+//        return 10
 //    }
 //
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,26 +110,16 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
 //            else {
 //                return UICollectionViewCell()
 //        }
-//        cell.set(dm.device(at: indexPath.item))
+//        cell.nameLabel.text = "Testing"
+//        cell.imageView.image = UIImage.avatar(id: 0)
 //        return cell
 //    }
-//
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseID, for: indexPath) as? UserCell
-            else {
-                return UICollectionViewCell()
-        }
-        cell.nameLabel.text = "Testing"
-        cell.imageView.image = UIImage.avatar(id: 0)
-        return cell
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedItems.insert(indexPath)
+        if selectedItems.count == 1 {
+            toggleChatBtn(enabled: true)
+        }
 //        guard let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatVC.self)) as? ChatVC
 //            else { return }
 //        var filter: Set<UUID> = []
@@ -130,6 +133,7 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
         selectedItems.remove(indexPath)
         if selectedItems.isEmpty {
             dm.startReloads()
+            toggleChatBtn(enabled: false)
         }
     }
     
@@ -138,6 +142,7 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
             collection.deselectItem(at: indexPath, animated: false)
         }
         selectedItems.removeAll()
+        toggleChatBtn(enabled: false)
         dm.startReloads()
     }
     

@@ -88,8 +88,9 @@ extension ChatVC {
 extension ChatVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let enabled = !(textField.text! + string).isEmpty
-        toggleSendBtn(enabled: enabled)
+        var newText = textField.text! + string
+        if textField.text!.count == 1 && string.isEmpty { newText = "" }
+        toggleSendBtn(enabled: !newText.isEmpty)
         return true
     }
     

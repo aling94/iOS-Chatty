@@ -41,3 +41,11 @@ class ProfileVC: UIViewController {
         }
     }
 }
+
+extension ProfileVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
