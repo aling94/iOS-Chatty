@@ -13,6 +13,8 @@ import CoreBluetooth
 class ChatVC: UIViewController {
 
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var inputField: UITextField!
+    @IBOutlet weak var textFieldBottom: NSLayoutConstraint!
     
     var frc: NSFetchedResultsController<Message>!
     var cm: ChatManager!
@@ -22,14 +24,62 @@ class ChatVC: UIViewController {
         frc = cm.messageFRC(delegate: self)
         try? frc.performFetch()
         cm.begin()
+        observeKeyboard()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObserver()
     }
 
-
-    @IBAction func testSendMessage(_ sender: Any) {
-        cm.sendMessage(text: "Hello world \(frc.fetchedObjects!.count)")
+    @IBAction func sendTapped(_ sender: Any) {
+        view.endEditing(true)
+        cm.sendMessage(text: inputField.text!)
+        inputField.text = ""
     }
 
+    func observeKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification : Notification) {
+        if let userInfo = notification.userInfo {
+            if let keySize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                textFieldBottom.constant = keySize.height
+                UIView.animate(withDuration: 1.5) {
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification : Notification) {
+        if let userInfo = notification.userInfo {
+            if let _ = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                textFieldBottom.constant = 0
+                UIView.animate(withDuration: 1.5) {
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
 }
+
+extension ChatVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 
 extension ChatVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,7 +94,9 @@ extension ChatVC: UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
 
 extension ChatVC: NSFetchedResultsControllerDelegate {

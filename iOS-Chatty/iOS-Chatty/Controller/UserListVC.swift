@@ -23,6 +23,7 @@ class UserListVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        navigationItem.title = User.current.name
         dm.updateAdvertisingData()
     }
 }
