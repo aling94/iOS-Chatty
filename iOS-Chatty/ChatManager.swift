@@ -135,8 +135,10 @@ extension ChatManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        guard let uuids = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
+            let serviceUUID = uuids.first, serviceUUID == ChattyBLE.serviceUUID,
+            filter.contains(peripheral.identifier) else { return }
         
-        guard filter.contains(peripheral.identifier) else { return }
         // Constantly running to check for new peripherals
         if peripheral.identifier.description.count > 0 {
             let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey]

@@ -16,6 +16,6 @@ class UserCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func set(_ deviceInfo: Device) {
-        nameLabel.text = deviceInfo.name
+        nameLabel.text = deviceInfo.user.name
     }
 }

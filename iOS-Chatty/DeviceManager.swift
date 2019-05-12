@@ -10,7 +10,7 @@ import CoreBluetooth
 
 protocol DeviceManagerDelegate: class {
     func deviceManager(didAddNewPeripheral: Device)
-    func deviceManagerDidUpdateDeviceName(at index: Int)
+    func deviceManagerDidUpdateDeviceDesc(at index: Int)
     func deviceManagerDidReload()
 }
 
@@ -78,12 +78,12 @@ final class DeviceManager: NSObject {
             delegate?.deviceManager(didAddNewPeripheral: device)
         }
         else if list.contains(where: { $0.peripheral.identifier == device.peripheral.identifier
-            && $0.name == "unknown"}) && device.name != "unknown" {
+            && $0.desc == "Unknown"}) && device.desc != "Unknown" {
             
             for index in 0..<list.count {
                 if (list[index].peripheral.identifier == device.peripheral.identifier) {
-                    list[index].name = device.name
-                    delegate?.deviceManagerDidUpdateDeviceName(at: index)
+                    list[index].update(desc: device.desc)
+                    delegate?.deviceManagerDidUpdateDeviceDesc(at: index)
                     break
                 }
             }
@@ -110,13 +110,14 @@ extension DeviceManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        
-        var peripheralName = cachedPeripheralNames[peripheral.identifier.description] ?? "Unknown"
+        guard let uuids = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
+            let serviceUUID = uuids.first, serviceUUID == ChattyBLE.serviceUUID else { return }
+        var peripheralInfo = cachedPeripheralNames[peripheral.identifier.description] ?? "Unknown"
         if let advertisementname = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            peripheralName = advertisementname
-            cachedPeripheralNames[peripheral.identifier.description] = peripheralName
+            peripheralInfo = advertisementname
+            cachedPeripheralNames[peripheral.identifier.description] = peripheralInfo
         }
-        let device = Device(peripheral: peripheral, name: peripheralName)
+        let device = Device(peripheral: peripheral, peripheralDesc: peripheralInfo)
         
         self.addOrUpdatePeripheralList(device: device, list: &visibleDevices)
         self.addOrUpdatePeripheralList(device: device, list: &cachedDevices)

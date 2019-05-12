@@ -17,23 +17,24 @@ class UserListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dm = DeviceManager(delegate: self)
+        dm.begin()
     }
 }
 
 extension UserListVC: DeviceManagerDelegate {
     
     func deviceManager(didAddNewPeripheral: Device) {
-        let lastItem = IndexPath(item: self.dm.deviceCount - 1, section: 0)
-        DispatchQueue.main.async {
-            self.collection.insertItems(at: [lastItem])
-        }
+//        let lastItem = IndexPath(item: self.dm.deviceCount - 1, section: 0)
+//        DispatchQueue.main.async {
+//            self.collection.insertItems(at: [lastItem])
+//        }
     }
     
-    func deviceManagerDidUpdateDeviceName(at index: Int) {
+    func deviceManagerDidUpdateDeviceDesc(at index: Int) {
         DispatchQueue.main.async {
             guard let cell = self.collection.cellForItem(at: IndexPath(item: index, section: 0)) as? UserCell
                 else { return }
-            
+
             cell.set(self.dm.device(at: index))
         }
     }
@@ -48,7 +49,7 @@ extension UserListVC: DeviceManagerDelegate {
 extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return dm.deviceCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,7 +57,7 @@ extension UserListVC: UICollectionViewDataSource, UICollectionViewDelegate {
             else {
                 return UICollectionViewCell()
         }
-//        cell.set(dm.device(at: indexPath.item))
+        cell.set(dm.device(at: indexPath.item))
         return cell
     }
     

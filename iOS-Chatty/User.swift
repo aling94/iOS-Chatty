@@ -10,7 +10,7 @@ import Foundation
 
 class User {
     
-    var name = ""
+    var name = "Unknown"
     var colorID = 0
     var avatarID = 0
     
@@ -20,7 +20,7 @@ class User {
         let user = User()
         if let dictionary = UserDefaults.standard.dictionary(forKey: currentUserKey) {
             
-            user.name = dictionary["name"] as? String ?? ""
+            user.name = dictionary["name"] as? String ?? "Unknown"
             user.avatarID = dictionary["avatarId"] as? Int ?? 0
             user.colorID = dictionary["colorId"] as? Int ?? 0
         }
