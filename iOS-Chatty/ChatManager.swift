@@ -51,8 +51,6 @@ class ChatManager: NSObject {
         {
             centralManager?.connect(item, options: nil)
         }
-        
-        _ = DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
     }
     
     func updateAdvertisingData()
@@ -143,14 +141,14 @@ extension ChatManager : CBPeripheralDelegate {
                 guard !messageInput.isEmpty else { return }
                 let data = messageInput.data(using: .utf8)
                 peripheral.writeValue(data!, for: characteristic, type: CBCharacteristicWriteType.withResponse)
-                DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
-                
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         print("write here")
+        DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
+        messageInput = ""
     }
 }
 

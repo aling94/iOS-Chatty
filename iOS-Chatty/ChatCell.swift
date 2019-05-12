@@ -17,16 +17,15 @@ class ChatCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        sentLabel.isHidden = true
-        receivedLabel.isHidden = true
+        
     }
     
     func set(_ message: Message) {
+        sentLabel.isHidden = !message.isSent
+        receivedLabel.isHidden = message.isSent
         if message.isSent {
-            sentLabel.isHidden = false
             sentLabel.text = message.body
         } else {
-            receivedLabel.isHidden = false
             receivedLabel.text = message.body
         }
     }
