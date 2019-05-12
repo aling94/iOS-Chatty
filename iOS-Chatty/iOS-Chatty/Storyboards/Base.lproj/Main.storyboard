@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M39-aN-XRJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAE-x2-0ot">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg1" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-7o-C2B">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000006" height="667"/>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TaD-6k-E3z">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
@@ -40,16 +40,13 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bq8-1X-az7">
                                                     <rect key="frame" x="0.0" y="0.0" width="193" height="193"/>
-                                                    <color key="backgroundColor" red="0.35686274509999999" green="0.72549019609999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="bq8-1X-az7" secondAttribute="height" multiplier="1:1" id="PAB-IK-QyS"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8P-nu-ZVh">
                                                     <rect key="frame" x="0.0" y="193" width="193" height="67"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -106,13 +103,13 @@
         <!--ProfileVC-->
         <scene sceneID="pqI-UD-gSk">
             <objects>
-                <viewController id="dfN-ET-8d3" customClass="ProfileVC" customModule="iOS_Chatty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" id="dfN-ET-8d3" customClass="ProfileVC" customModule="iOS_Chatty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="W9F-lb-WVJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg3" translatesAutoresizingMaskIntoConstraints="NO" id="6pK-Yg-KYY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000006" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeR-ad-nWt">
                                 <rect key="frame" x="40" y="567" width="295" height="50"/>
@@ -186,7 +183,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg2" translatesAutoresizingMaskIntoConstraints="NO" id="Jhg-rR-Wg8">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000006" height="667"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0jg-78-ynf">
                                 <rect key="frame" x="0.0" y="20" width="375" height="587"/>
@@ -332,6 +329,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9h-rj-4uh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="130.40000000000001" y="137.18140929535232"/>
+        </scene>
+        <!--Avatar PickerVC-->
+        <scene sceneID="f9r-XT-Ua0">
+            <objects>
+                <viewController storyboardIdentifier="AvatarPickerVC" id="nAE-x2-0ot" customClass="AvatarPickerVC" customModule="iOS_Chatty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wqn-hc-U7q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg1" translatesAutoresizingMaskIntoConstraints="NO" id="xPY-cV-3k5">
+                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000006" height="667"/>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vgj-FM-X5Y">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UQ5-Jy-ttr">
+                                    <size key="itemSize" width="193" height="260"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="ImageCell" id="Ys7-ZL-i1o" customClass="ImageCell" customModule="iOS_Chatty" customModuleProvider="target">
+                                        <rect key="frame" x="91" y="0.0" width="193" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="193" height="260"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zbh-I8-pec">
+                                                    <rect key="frame" x="0.0" y="0.0" width="193" height="260"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="zbh-I8-pec" secondAttribute="trailing" id="Kca-aK-gji"/>
+                                            <constraint firstAttribute="bottom" secondItem="zbh-I8-pec" secondAttribute="bottom" id="VzS-mJ-QCA"/>
+                                            <constraint firstItem="zbh-I8-pec" firstAttribute="top" secondItem="Ys7-ZL-i1o" secondAttribute="top" id="j7S-f9-bX1"/>
+                                            <constraint firstItem="zbh-I8-pec" firstAttribute="leading" secondItem="Ys7-ZL-i1o" secondAttribute="leading" id="yAD-ER-zeF"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="zbh-I8-pec" id="JYW-U4-xm5"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="nAE-x2-0ot" id="9HV-q9-ijF"/>
+                                    <outlet property="delegate" destination="nAE-x2-0ot" id="gxl-hV-3yV"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="xPY-cV-3k5" secondAttribute="bottom" id="60a-uo-x91"/>
+                            <constraint firstItem="vgj-FM-X5Y" firstAttribute="leading" secondItem="qq5-bw-uop" secondAttribute="leading" id="Ihl-Pe-bYH"/>
+                            <constraint firstItem="vgj-FM-X5Y" firstAttribute="top" secondItem="qq5-bw-uop" secondAttribute="top" id="Kfh-Uw-tCK"/>
+                            <constraint firstItem="qq5-bw-uop" firstAttribute="trailing" secondItem="xPY-cV-3k5" secondAttribute="trailing" id="LrB-D2-lYx"/>
+                            <constraint firstItem="xPY-cV-3k5" firstAttribute="top" secondItem="Wqn-hc-U7q" secondAttribute="top" id="S4K-ct-Cla"/>
+                            <constraint firstItem="xPY-cV-3k5" firstAttribute="leading" secondItem="qq5-bw-uop" secondAttribute="leading" id="Uu5-wL-mu4"/>
+                            <constraint firstItem="qq5-bw-uop" firstAttribute="trailing" secondItem="vgj-FM-X5Y" secondAttribute="trailing" id="mRp-1P-UvN"/>
+                            <constraint firstItem="qq5-bw-uop" firstAttribute="bottom" secondItem="vgj-FM-X5Y" secondAttribute="bottom" id="rb4-mk-Uv8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qq5-bw-uop"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WaZ-yg-TaX">
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Den-pO-JMQ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collection" destination="vgj-FM-X5Y" id="Czz-sA-QuG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="INR-tI-4p8" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2810" y="-31"/>
         </scene>
     </scenes>
     <resources>

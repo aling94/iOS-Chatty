@@ -16,6 +16,8 @@ class UserCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func set(_ deviceInfo: Device) {
-        nameLabel.text = deviceInfo.user.name
+        let userInfo = deviceInfo.user
+        nameLabel.text = userInfo.name
+        imageView.image = UIImage(named: "\(Constants.avatarPrefix)\(userInfo.avatarID)")
     }
 }

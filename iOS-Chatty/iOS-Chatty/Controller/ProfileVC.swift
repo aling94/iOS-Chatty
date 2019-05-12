@@ -13,7 +13,7 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        nameField.text = User.current.name
     }
 
 
