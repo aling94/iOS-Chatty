@@ -13,11 +13,25 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var avatarImage: UIImageView!
     
+    var isUpdating = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Profile"
         nameField.text = User.current.name
         avatarImage.image = UIImage.avatar(id: User.current.avatarID)
+    }
+    
+    func transition() {
+        if isUpdating {
+            navigationController?.popViewController(animated: true)
+        } else {
+            guard let vc = storyboard?.instantiateViewController(withIdentifier:
+                String(describing: UserListVC.self)) as? UserListVC else { return }
+            
+            vc.navigationItem.hidesBackButton = true
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
 
@@ -26,7 +40,7 @@ class ProfileVC: UIViewController {
             User.current.name = name
             User.current.save()
             showAlert(title: "Notice", message: "Preferences have been saved.") { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.transition()
             }
             
         } else {

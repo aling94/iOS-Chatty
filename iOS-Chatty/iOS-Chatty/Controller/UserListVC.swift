@@ -78,6 +78,14 @@ class UserListVC: UIViewController {
         deselectAll()
     }
     
+    @IBAction func profileTapped(_ sender: Any) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ProfileVC.self)) as? ProfileVC
+            else { return }
+        
+        vc.isUpdating = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func reload() {
         DispatchQueue.main.async {
             self.collection.reloadData()
