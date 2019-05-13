@@ -17,12 +17,13 @@ class ChatManager: NSObject {
     
     var chatID: String!
     var filter: Set<UUID>!
-    var names: String!
+    var chatName: String!
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
     private var visibleDevices: [Device] = []
     private var cachedDevices: [Device] = []
     private var peripheralSet: Set<CBPeripheral> = []
+    private var names: [String : String] = [:]
     private var firstWrite = false
     
     weak var delegate: ChatManagerDelegate?
@@ -32,8 +33,9 @@ class ChatManager: NSObject {
     init(devices: [Device]) {
         super.init()
         filter = Set<UUID>(devices.map({$0.uuid}))
-        names = devices.map({$0.user.name}).joined(separator: "|")
+        chatName = devices.map({$0.user.name}).joined(separator: "|")
         chatID = filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
+        devices.forEach({self.names[$0.uuid.uuidString] = $0.user.name})
     }
     
     func messageFRC(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<Message> {
@@ -162,9 +164,12 @@ extension ChatManager : CBPeripheralManagerDelegate {
         for request in requests{
             if let value = request.value {
                 peripheral.respond(to: request, withResult: .success)
-                let messageText = String(data: value, encoding: String.Encoding.utf8)!
+                var messageText = String(data: value, encoding: String.Encoding.utf8)!
                 if !messageText.isEmpty {
-                    DataManager.shared.createMessage(chatID: chatID, sender: request.central.identifier.uuidString, body: messageText, isSent: false)
+                    let senderID = request.central.identifier.uuidString
+                    let senderName = names[senderID] ?? "Unknown"
+                    messageText = "\(senderName) | \(messageText)"
+                    DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)
                 }
             }
             

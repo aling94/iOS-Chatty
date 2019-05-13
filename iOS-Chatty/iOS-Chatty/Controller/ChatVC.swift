@@ -22,7 +22,7 @@ class ChatVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = cm.names
+        navigationItem.title = cm.chatName
         toggleSendBtn(enabled: false)
         frc = cm.messageFRC(delegate: self)
         try? frc.performFetch()
