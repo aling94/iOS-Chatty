@@ -22,13 +22,15 @@ class ProfileVC: UIViewController {
 
 
     @IBAction func saveProfile(_ sender: Any) {
-        if let name = nameField.text, !name.isEmpty {
+        if let name = nameField.text, !name.isEmpty, User.current.avatarID > 0 {
             User.current.name = name
             User.current.save()
             showAlert(title: "Notice", message: "Preferences have been saved.") { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }
             
+        } else {
+            showAlert(title: "Incomplete", message: "Please fill out your name and pick an avatar.")
         }
     }
     

@@ -34,7 +34,7 @@ class UserCell: UICollectionViewCell {
     
     func set(_ deviceInfo: Device) {
         let userInfo = deviceInfo.user
-        nameLabel.text = userInfo.name
+        nameLabel.text = userInfo.name.isEmpty ? "Unknown" : userInfo.name
         imageView.image = UIImage.avatar(id: userInfo.avatarID)
     }
 }

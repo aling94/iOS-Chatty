@@ -34,7 +34,7 @@ class ChatManager: NSObject {
     init(devices: [Device]) {
         super.init()
         filter = Set<UUID>(devices.map({$0.uuid}))
-        chatName = devices.isEmpty ? "All" : devices.map({$0.user.name}).joined(separator: "|")
+        chatName = devices.isEmpty ? "All" : devices.map({ $0.user.name.isEmpty ? "Unknown" : $0.user.name}).joined(separator: " | ")
         chatID = devices.isEmpty ? "All" : filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
         devices.forEach({self.names[$0.uuid.uuidString] = $0.user.name})
     }
@@ -64,8 +64,6 @@ class ChatManager: NSObject {
             peripheralManager.stopAdvertising()
         }
         
-//        let userData = User.current
-//        let advertisementData = String(format: "%@|%d|%d", userData.name, userData.avatarID, userData.colorID)
         let advertisementData = ChattyBLE.advertisement
         
         let advertisement: [String : Any] = [
@@ -187,7 +185,7 @@ extension ChatManager : CBPeripheralManagerDelegate {
                 if !messageText.isEmpty {
                     let senderID = request.central.identifier.uuidString
                     let senderName = names[senderID] ?? "Unknown"
-                    messageText = "\(senderName) | \(messageText)"
+                    messageText = "[\(senderName)] : \(messageText)"
                     DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)
                 }
             }

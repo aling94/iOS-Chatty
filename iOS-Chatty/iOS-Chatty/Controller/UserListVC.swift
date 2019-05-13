@@ -77,17 +77,21 @@ class UserListVC: UIViewController {
     @IBAction func resetTapped(_ sender: Any) {
         deselectAll()
     }
+    
+    func reload() {
+        DispatchQueue.main.async {
+            self.collection.reloadData()
+            self.toggleNotice()
+            self.toggleChatAll()
+        }
+    }
 }
 
 //  MARK: - DeviceManagerDelegate
 extension UserListVC: DeviceManagerDelegate {
     
     func deviceManager(didAddNewPeripheral: Device) {
-        DispatchQueue.main.async {
-            self.collection.reloadData()
-            self.toggleNotice()
-            self.toggleChatAll()
-        }
+        reload()
     }
     
     func deviceManagerDidUpdateDeviceDesc(at index: Int) {
@@ -101,11 +105,7 @@ extension UserListVC: DeviceManagerDelegate {
     }
     
     func deviceManagerDidReload() {
-        DispatchQueue.main.async {
-            self.collection.reloadData()
-            self.toggleNotice()
-            self.toggleChatAll()
-        }
+        reload()
     }
 }
 

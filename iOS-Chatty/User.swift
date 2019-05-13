@@ -12,7 +12,7 @@ fileprivate let currentUserKey = "currentUser"
 
 class User {
     
-    var name = "Unknown"
+    var name = ""
     var colorID = 0
     var avatarID = 0
     
@@ -21,12 +21,16 @@ class User {
         let user = User()
         if let dictionary = UserDefaults.standard.dictionary(forKey: currentUserKey) {
             
-            user.name = dictionary["name"] as? String ?? "Unknown"
+            user.name = dictionary["name"] as? String ?? ""
             user.avatarID = dictionary["avatarId"] as? Int ?? 0
             user.colorID = dictionary["colorId"] as? Int ?? 0
         }
         return user
     }()
+    
+    var validProfile: Bool {
+        return !name.isEmpty && avatarID > 0
+    }
 
     func save() {
         let dictionary : Dictionary<String, Any> = ["name": name, "avatarId": avatarID, "colorId": colorID]
