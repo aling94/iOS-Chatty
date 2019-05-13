@@ -23,6 +23,7 @@ class ChatManager: NSObject {
     private var visibleDevices: [Device] = []
     private var cachedDevices: [Device] = []
     private var peripheralSet: Set<CBPeripheral> = []
+    private var firstWrite = false
     
     weak var delegate: ChatManagerDelegate?
     
@@ -49,6 +50,7 @@ class ChatManager: NSObject {
     func sendMessage(text: String) {
         messageInput = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !messageInput.isEmpty && !peripheralSet.isEmpty else { return }
+        firstWrite = false
         for item in peripheralSet {
             centralManager?.connect(item, options: nil)
         }
@@ -138,8 +140,9 @@ extension ChatManager : CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         print("write here")
+        guard !messageInput.isEmpty && !firstWrite else { return }
         DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
-        messageInput = ""
+        firstWrite = true
     }
 }
 
