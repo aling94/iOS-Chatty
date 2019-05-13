@@ -12,6 +12,7 @@ class UserListVC: UIViewController {
     
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var chatBtn: UIButton!
+    @IBOutlet weak var chatAllBtn: UIButton!
     @IBOutlet weak var notice: UILabel!
     
     var dm: DeviceManager!
@@ -23,6 +24,7 @@ class UserListVC: UIViewController {
         dm = DeviceManager(delegate: self)
         dm.begin()
         toggleNotice()
+        toggleChatAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +44,13 @@ class UserListVC: UIViewController {
         notice.isHidden = dm.deviceCount > 0
     }
     
+    func toggleChatAll() {
+        let enabled = dm.deviceCount > 0
+        chatAllBtn.isEnabled = enabled
+        chatAllBtn.backgroundColor = enabled ? .white : .lightGray
+        chatAllBtn.setTitleColor(enabled ? .lightGreen : .white, for: .normal)
+    }
+    
     func toggleChatBtn(enabled: Bool) {
         chatBtn.isEnabled = enabled
         chatBtn.backgroundColor = enabled ? .lightGreen : .lightGray
@@ -57,6 +66,14 @@ class UserListVC: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func chatAllTapped(_ sender: Any) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatVC.self)) as? ChatVC
+            else { return }
+        
+        vc.cm = ChatManager(devices: [])
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func resetTapped(_ sender: Any) {
         deselectAll()
     }
@@ -69,6 +86,7 @@ extension UserListVC: DeviceManagerDelegate {
         DispatchQueue.main.async {
             self.collection.reloadData()
             self.toggleNotice()
+            self.toggleChatAll()
         }
     }
     
@@ -86,6 +104,7 @@ extension UserListVC: DeviceManagerDelegate {
         DispatchQueue.main.async {
             self.collection.reloadData()
             self.toggleNotice()
+            self.toggleChatAll()
         }
     }
 }

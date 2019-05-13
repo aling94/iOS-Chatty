@@ -108,7 +108,7 @@
                                     <constraint firstAttribute="height" constant="50" id="GEX-07-BgS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="Reset">
+                                <state key="normal" title="Chat All">
                                     <color key="titleColor" red="0.35686274509999999" green="0.72549019609999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -117,7 +117,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="resetTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b6S-ue-Ofs"/>
+                                    <action selector="chatAllTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K5M-RN-La6"/>
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No users found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ns5-jx-txg">
@@ -150,6 +150,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="bwB-L7-RUh">
+                        <barButtonItem key="leftBarButtonItem" title="Clear" id="q61-zt-2iT">
+                            <connections>
+                                <action selector="resetTapped:" destination="BYZ-38-t0r" id="mDy-TM-uom"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="TPd-oE-2BZ">
                             <connections>
                                 <segue destination="dfN-ET-8d3" kind="show" id="MzM-hb-Izb"/>
@@ -157,6 +162,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatAllBtn" destination="oVh-RG-Lsx" id="lJM-63-gxB"/>
                         <outlet property="chatBtn" destination="8cr-a2-zaX" id="ky6-qo-Zng"/>
                         <outlet property="collection" destination="TaD-6k-E3z" id="6sD-ri-eLt"/>
                         <outlet property="notice" destination="ns5-jx-txg" id="UFN-7N-7gK"/>

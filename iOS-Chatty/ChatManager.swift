@@ -6,6 +6,7 @@
 //  Copyright © 2019 iOSPlayground. All rights reserved.
 //
 
+import UIKit
 import CoreBluetooth
 import CoreData
 
@@ -33,8 +34,8 @@ class ChatManager: NSObject {
     init(devices: [Device]) {
         super.init()
         filter = Set<UUID>(devices.map({$0.uuid}))
-        chatName = devices.map({$0.user.name}).joined(separator: "|")
-        chatID = filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
+        chatName = devices.isEmpty ? "All" : devices.map({$0.user.name}).joined(separator: "|")
+        chatID = devices.isEmpty ? "All" : filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
         devices.forEach({self.names[$0.uuid.uuidString] = $0.user.name})
     }
     
@@ -63,10 +64,16 @@ class ChatManager: NSObject {
             peripheralManager.stopAdvertising()
         }
         
-        let userData = User.current
-        let advertisementData = String(format: "%@|%d|%d", userData.name, userData.avatarID, userData.colorID)
+//        let userData = User.current
+//        let advertisementData = String(format: "%@|%d|%d", userData.name, userData.avatarID, userData.colorID)
+        let advertisementData = ChattyBLE.advertisement
         
-        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID], CBAdvertisementDataLocalNameKey: advertisementData])
+        let advertisement: [String : Any] = [
+            CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID],
+            CBAdvertisementDataLocalNameKey: advertisementData
+        ]
+        
+        peripheralManager.startAdvertising(advertisement)
     }
     
     
@@ -79,6 +86,13 @@ class ChatManager: NSObject {
         serialService.characteristics = [rx]
         
         peripheralManager.add(serialService)
+    }
+    
+    func shouldAcceptPeripheral(advertisement: [String : Any], peripheral: CBPeripheral) -> Bool {
+        guard let uuids = advertisement[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
+            let serviceUUID = uuids.first,
+            serviceUUID == ChattyBLE.serviceUUID else { return false }
+        return filter.isEmpty || filter.contains(peripheral.identifier)
     }
 }
 
@@ -97,13 +111,14 @@ extension ChatManager : CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-        guard filter.contains(peripheral.identifier),
+        guard shouldAcceptPeripheral(advertisement: advertisementData, peripheral: peripheral),
             peripheral.identifier.description.count > 0,
             let adName = advertisementData[CBAdvertisementDataLocalNameKey] as? String else { return }
         
         let components = adName.components(separatedBy: "|")
-        if components.count == 3 {
+        if components.count == ChattyBLE.advertNumComponents {
             peripheralSet.insert(peripheral)
+            names[peripheral.identifier.uuidString] = components[0]
         }
         print(peripheralSet, "----------------\n")
     }
@@ -114,6 +129,10 @@ extension ChatManager : CBCentralManagerDelegate {
             peripheral.delegate = self
             peripheral.discoverServices(nil)
         }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+//        peripheralSet.remove(peripheral)
     }
 }
 

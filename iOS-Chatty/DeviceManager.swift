@@ -65,8 +65,9 @@ final class DeviceManager: NSObject {
             peripheralManager.stopAdvertising()
         }
         
-        let user = User.current
-        let advertisementData = String(format: "%@|%d|%d", user.name, user.avatarID, user.colorID)
+//        let user = User.current
+//        let advertisementData = String(format: "%@|%d|%d", user.name, user.avatarID, user.colorID)
+        let advertisementData = ChattyBLE.advertisement
         
         peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID], CBAdvertisementDataLocalNameKey: advertisementData])
     }
