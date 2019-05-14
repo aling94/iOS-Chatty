@@ -19,14 +19,21 @@ struct ChattyBLE {
         static let permissions: CBAttributePermissions = .writeable
     }
     
-    static var currentDeviceID: UUID? {
-        return UIDevice.current.identifierForVendor
-    }
-    
     static var advertisement: String {
         let userData = User.current
         return String(format: "%@|%d|%d", userData.name, userData.avatarID, userData.colorID)
     }
+    
+    static let currentDeviceID: String = {
+        let key = "currentDeviceID"
+        if let deviceID = UserDefaults.standard.string(forKey: key) {
+            return deviceID
+        }
+        guard let uuid = UIDevice.current.identifierForVendor else { return "" }
+        let deviceID = uuid.uuidString.components(separatedBy: "-")[0]
+        UserDefaults.standard.setValue(deviceID, forKey: key)
+        return deviceID
+    }()
 }
 
 struct Constants {
