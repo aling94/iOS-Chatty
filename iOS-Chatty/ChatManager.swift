@@ -21,8 +21,6 @@ class ChatManager: NSObject {
     var chatName: String!
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
-    private var visibleDevices: [Device] = []
-    private var cachedDevices: [Device] = []
     private var peripheralSet: Set<CBPeripheral> = []
     private var names: [String : String] = [:]
     private var firstWrite = false
@@ -184,8 +182,11 @@ extension ChatManager : CBPeripheralManagerDelegate {
                 var messageText = String(data: value, encoding: String.Encoding.utf8)!
                 if !messageText.isEmpty {
                     let senderID = request.central.identifier.uuidString
-                    let senderName = names[senderID] ?? "Unknown"
-                    messageText = "[\(senderName)] : \(messageText)"
+                    if names.count > 1 {
+                        
+                        let senderName = names[senderID] ?? "Unknown"
+                        messageText = "[\(senderName)] : \(messageText)"
+                    }
                     DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)
                 }
             }
