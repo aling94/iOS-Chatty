@@ -64,4 +64,9 @@ extension ProfileVC: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.isEmpty { return true }
+        return textField.text!.count < Constants.maxNameLength
+    }
 }

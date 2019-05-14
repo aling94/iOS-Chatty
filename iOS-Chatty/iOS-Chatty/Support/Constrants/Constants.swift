@@ -32,5 +32,6 @@ struct ChattyBLE {
 struct Constants {
     static let avatarCount = 9
     static let avatarPrefix = "avatar"
+    static let maxNameLength = 16
     
 }
