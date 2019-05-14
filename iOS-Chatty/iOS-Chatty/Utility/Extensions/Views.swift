@@ -47,6 +47,6 @@ extension UIColor {
     }
     
     static var lightGreen: UIColor {
-        return UIColor(red: 91/255.0, green: 185/255.0, blue: 116/255.0, alpha: 1)
+        return UIColor(red: 37/255.0, green: 188/255.0, blue: 109/255.0, alpha: 1)
     }
 }
