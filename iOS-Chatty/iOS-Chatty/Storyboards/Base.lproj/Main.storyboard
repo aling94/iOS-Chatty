@@ -342,7 +342,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q7g-VN-bO1" userLabel="ChatBox">
-                                <rect key="frame" x="0.0" y="606" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mQq-2Q-STD">
                                         <rect key="frame" x="320" y="15" width="40" height="30"/>
@@ -382,7 +382,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6aJ-iY-El6" firstAttribute="bottom" secondItem="Q7g-VN-bO1" secondAttribute="bottom" constant="1" id="686-C2-izr"/>
+                            <constraint firstItem="6aJ-iY-El6" firstAttribute="bottom" secondItem="Q7g-VN-bO1" secondAttribute="bottom" id="686-C2-izr"/>
                             <constraint firstItem="6aJ-iY-El6" firstAttribute="trailing" secondItem="Jhg-rR-Wg8" secondAttribute="trailing" id="7lq-36-thO"/>
                             <constraint firstItem="Jhg-rR-Wg8" firstAttribute="leading" secondItem="6aJ-iY-El6" secondAttribute="leading" id="C1z-7d-Hzs"/>
                             <constraint firstAttribute="trailing" secondItem="Q7g-VN-bO1" secondAttribute="trailing" id="HwP-sz-aI4"/>

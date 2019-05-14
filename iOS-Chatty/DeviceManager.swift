@@ -112,8 +112,7 @@ extension DeviceManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard let uuids = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
-            let serviceUUID = uuids.first, serviceUUID == ChattyBLE.serviceUUID else { return }
+        
         var peripheralInfo = cachedPeripheralNames[peripheral.identifier.description] ?? "Unknown"
         if let advertisementname = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             peripheralInfo = advertisementname

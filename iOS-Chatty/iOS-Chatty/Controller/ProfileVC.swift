@@ -67,6 +67,6 @@ extension ProfileVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isEmpty { return true }
-        return textField.text!.count < Constants.maxNameLength
+        return string != "|" && textField.text!.count < Constants.maxNameLength
     }
 }
