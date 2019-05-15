@@ -27,6 +27,7 @@ class ChatVC: UIViewController {
         frc = cm.messageFRC(delegate: self)
         try? frc.performFetch()
         cm.begin()
+        hideKeyboardOnScreenTap()
         observeKeyboard()
     }
     
