@@ -22,7 +22,7 @@ class ChatManager: NSObject {
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
     private var peripheralSet: Set<CBPeripheral> = []
-    private var names: [String : String] = [:]
+    private var names: [String : Device] = [:]
     private var firstWrite = false
     
     weak var delegate: ChatManagerDelegate?
@@ -34,7 +34,7 @@ class ChatManager: NSObject {
         filter = Set<UUID>(devices.map({$0.uuid}))
         chatName = devices.isEmpty ? "All" : devices.map({ $0.user.name.isEmpty ? "Unknown" : $0.user.name}).joined(separator: " | ")
         chatID = devices.isEmpty ? "All" : filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
-        devices.forEach({self.names[$0.uuid.uuidString] = $0.user.name})
+        devices.forEach({self.names[$0.uuid.uuidString] = $0})
     }
     
     func messageFRC(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<Message> {
@@ -90,6 +90,10 @@ class ChatManager: NSObject {
             serviceUUID == ChattyBLE.serviceUUID else { return false }
         return filter.isEmpty || filter.contains(peripheral.identifier)
     }
+    
+    func avatarForSender(senderID: String) -> Int {
+        return names[senderID]?.user.avatarID ?? 0
+    }
 }
 
 //  MARK: - CBCentralManagerDelegate
@@ -114,7 +118,9 @@ extension ChatManager : CBCentralManagerDelegate {
         let components = adName.components(separatedBy: "|")
         if components.count == ChattyBLE.advertNumComponents {
             peripheralSet.insert(peripheral)
-            names[peripheral.identifier.uuidString] = components[0]
+            if names[peripheral.identifier.uuidString] != nil {
+                names[peripheral.identifier.uuidString]!.user.name = components[0]
+            }
         }
         print(peripheralSet, "----------------\n")
     }
@@ -184,7 +190,7 @@ extension ChatManager : CBPeripheralManagerDelegate {
                     let senderID = request.central.identifier.uuidString
                     if names.count > 1 {
                         
-                        let senderName = names[senderID] ?? "Unknown"
+                        let senderName = names[senderID]?.user.name ?? "Unknown"
                         messageText = "[\(senderName)] : \(messageText)"
                     }
                     DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)

@@ -110,7 +110,12 @@ extension ChatVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatCell.reuseID) as? ChatCell else {
             return UITableViewCell()
         }
-        cell.set(frc.object(at: indexPath))
+        let message = frc.object(at: indexPath)
+        var avatarID = User.current.avatarID
+        if let senderID = message.sender {
+            avatarID = cm.avatarForSender(senderID: senderID)
+        }
+        cell.set(message, avatarID: avatarID)
         return cell
     }
     
@@ -149,7 +154,7 @@ extension ChatVC: NSFetchedResultsControllerDelegate {
             table.insertRows(at: [newIdp], with: .automatic)
         case .update:
             guard let idp = indexPath, let cell = table.cellForRow(at: idp) as? ChatCell else { return }
-            cell.set(frc.object(at: idp))
+//            cell.set(frc.object(at: idp))
         case .delete:
             guard let idp = indexPath else { return }
             table.deleteRows(at: [idp], with: .automatic)
