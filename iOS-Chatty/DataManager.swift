@@ -41,42 +41,19 @@ class DataManager {
 }
 
 extension DataManager {
-    func createChatLog(recipientID: String) -> ChatLog {
-        let log = ChatLog(context: mainContext)
-        log.userID = recipientID
-        saveContext()
-        return log
-    }
-    
-    func createMessage(log: ChatLog, sender: String?, body: String, isSent: Bool) -> Message? {
-        guard !body.isEmpty else { return nil }
-        let message = Message(context: mainContext)
-        message.timestamp = Date()
-        message.body = body
-        message.isSent = isSent
-        message.sender = log.userID
-        log.addToMessages(message)
-        saveContext()
-        return message
-    }
-    
-    func createMessage(chatID: String, sender: String?, body: String, isSent: Bool) {
+
+    func createMessage(chatID: String, sender: String?, avatarID: Int, body: String, isSent: Bool) {
         guard !body.isEmpty else { return }
         let message = Message(context: mainContext)
         message.timestamp = Date()
         message.chatID = chatID
+        message.avatarID = Int32(avatarID)
         message.body = body
         message.isSent = isSent
         message.sender = sender
         saveContext()
     }
-    
-    func getChatLog(userID: String) -> ChatLog? {
-        let request: NSFetchRequest<ChatLog> = NSFetchRequest<ChatLog>()
-        request.predicate = NSPredicate(format: "userID == %@", userID)
-        guard let logs = try? mainContext.fetch(request) else { return nil }
-        return logs.first
-    }
+
 }
 
 

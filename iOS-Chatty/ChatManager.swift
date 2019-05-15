@@ -162,7 +162,9 @@ extension ChatManager : CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         guard !messageInput.isEmpty && !firstWrite else { return }
-        DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
+        DataManager.shared.createMessage(chatID: chatID, sender: nil,
+                                         avatarID: User.current.avatarID,
+                                         body: messageInput, isSent: true)
         firstWrite = true
     }
 }
@@ -191,7 +193,10 @@ extension ChatManager : CBPeripheralManagerDelegate {
                         let senderName = deviceMap[senderID]?.user.name ?? "Unknown"
                         messageText = "[\(senderName)] : \(messageText)"
                     }
-                    DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)
+                    let avatarID = deviceMap[senderID]?.user.avatarID ?? 0
+                    DataManager.shared.createMessage(chatID: chatID, sender:senderID,
+                                                     avatarID: avatarID,
+                                                     body: messageText, isSent: false)
                 }
             }
             

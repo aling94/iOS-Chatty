@@ -27,12 +27,14 @@ class ChatCell: UITableViewCell {
         senderPic.isHidden = sentLabel.isHidden
         receivedLabel.isHidden = message.isSent
         recvPic.isHidden = receivedLabel.isHidden
+        
+        let avatar = avatarID > 0 ? UIImage.avatar(id: avatarID) : UIImage.avatar(id: Int(message.avatarID))
         if message.isSent {
             sentLabel.text = message.body
-            senderPic.image = UIImage.avatar(id: avatarID)
+            senderPic.image = avatar
         } else {
             receivedLabel.text = message.body
-            recvPic.image = UIImage.avatar(id: avatarID)
+            recvPic.image = avatar
         }
     }
 }
