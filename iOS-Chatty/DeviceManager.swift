@@ -18,7 +18,7 @@ final class DeviceManager: NSObject {
     
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
-    private var visibleDevices: [Device] = []
+    var visibleDevices: [Device] = []
     private var cachedDevices: [Device] = []
     private var cachedPeripheralNames: [String : String] = [:]
     weak var delegate: DeviceManagerDelegate?

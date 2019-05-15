@@ -61,8 +61,8 @@ class UserListVC: UIViewController {
             let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatVC.self)) as? ChatVC
             else { return }
         
-        let devices = selectedItems.map({dm.device(at: $0.item)})
-        vc.cm = ChatManager(devices: devices)
+        let filter = selectedItems.map({dm.device(at: $0.item)})
+        vc.cm = ChatManager(filter: filter, devices: dm.visibleDevices)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -70,7 +70,7 @@ class UserListVC: UIViewController {
         guard let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatVC.self)) as? ChatVC
             else { return }
         
-        vc.cm = ChatManager(devices: [])
+        vc.cm = ChatManager(filter: [], devices: dm.visibleDevices)
         navigationController?.pushViewController(vc, animated: true)
     }
     

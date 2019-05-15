@@ -60,8 +60,8 @@ extension DataManager {
         return message
     }
     
-    func createMessage(chatID: String, sender: String?, body: String, isSent: Bool) -> Message? {
-        guard !body.isEmpty else { return nil }
+    func createMessage(chatID: String, sender: String?, body: String, isSent: Bool) {
+        guard !body.isEmpty else { return }
         let message = Message(context: mainContext)
         message.timestamp = Date()
         message.chatID = chatID
@@ -69,7 +69,6 @@ extension DataManager {
         message.isSent = isSent
         message.sender = sender
         saveContext()
-        return message
     }
     
     func getChatLog(userID: String) -> ChatLog? {

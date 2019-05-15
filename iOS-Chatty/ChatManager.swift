@@ -22,19 +22,25 @@ class ChatManager: NSObject {
     private var peripheralManager: CBPeripheralManager!
     private var centralManager: CBCentralManager!
     private var peripheralSet: Set<CBPeripheral> = []
-    private var names: [String : Device] = [:]
+    private var deviceMap: [String : Device] = [:]
     private var firstWrite = false
     
     weak var delegate: ChatManagerDelegate?
     
     var messageInput = ""
     
-    init(devices: [Device]) {
+    init(filter: [Device], devices: [Device]) {
         super.init()
-        filter = Set<UUID>(devices.map({$0.uuid}))
-        chatName = devices.isEmpty ? "All" : devices.map({ $0.user.name.isEmpty ? "Unknown" : $0.user.name}).joined(separator: " | ")
-        chatID = devices.isEmpty ? "All" : filter.map({ $0.uuidString }).sorted(by: <).joined(separator: "|")
-        devices.forEach({self.names[$0.uuid.uuidString] = $0})
+        self.filter = Set<UUID>(filter.map({$0.uuid}))
+        if filter.isEmpty {
+            chatName = "All"
+            chatID = "All"
+        } else {
+            chatName = filter.map({ $0.user.name.isEmpty ? "Unknown" : $0.user.name}).joined(separator: " | ")
+            chatID = filter.map({ $0.uuid.uuidString }).sorted(by: <).joined(separator: ";")
+        }
+        
+        devices.forEach({self.deviceMap[$0.uuid.uuidString] = $0})
     }
     
     func messageFRC(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<Message> {
@@ -92,7 +98,7 @@ class ChatManager: NSObject {
     }
     
     func avatarForSender(senderID: String) -> Int {
-        return names[senderID]?.user.avatarID ?? 0
+        return deviceMap[senderID]?.user.avatarID ?? 0
     }
 }
 
@@ -118,8 +124,8 @@ extension ChatManager : CBCentralManagerDelegate {
         let components = adName.components(separatedBy: "|")
         if components.count == ChattyBLE.advertNumComponents {
             peripheralSet.insert(peripheral)
-            if names[peripheral.identifier.uuidString] != nil {
-                names[peripheral.identifier.uuidString]!.user.name = components[0]
+            if deviceMap[peripheral.identifier.uuidString] != nil {
+                deviceMap[peripheral.identifier.uuidString]!.user.name = components[0]
             }
         }
         print(peripheralSet, "----------------\n")
@@ -162,7 +168,6 @@ extension ChatManager : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("write here")
         guard !messageInput.isEmpty && !firstWrite else { return }
         DataManager.shared.createMessage(chatID: chatID, sender: nil, body: messageInput, isSent: true)
         firstWrite = true
@@ -188,9 +193,9 @@ extension ChatManager : CBPeripheralManagerDelegate {
                 var messageText = String(data: value, encoding: String.Encoding.utf8)!
                 if !messageText.isEmpty {
                     let senderID = request.central.identifier.uuidString
-                    if names.count > 1 {
+                    if filter.count != 1 {
                         
-                        let senderName = names[senderID]?.user.name ?? "Unknown"
+                        let senderName = deviceMap[senderID]?.user.name ?? "Unknown"
                         messageText = "[\(senderName)] : \(messageText)"
                     }
                     DataManager.shared.createMessage(chatID: chatID, sender:senderID , body: messageText, isSent: false)
