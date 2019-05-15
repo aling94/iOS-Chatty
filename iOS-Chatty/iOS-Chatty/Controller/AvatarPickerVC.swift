@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ViewAnimator
 
 class AvatarPickerVC: UIViewController {
     
@@ -18,6 +19,17 @@ class AvatarPickerVC: UIViewController {
         navigationItem.title = "Avatar Selection"
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        collection.performBatchUpdates({
+            let animation = AnimationType.zoom(scale: 0.2)
+            UIView.animate(views: self.collection.visibleCells,
+                           animations: [animation],
+                           duration: 0.5)
+            
+        }, completion: nil)
+    }
 
 }
 

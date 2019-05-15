@@ -1,16 +1,20 @@
 PODS:
   - Pulsator (0.5.3)
+  - ViewAnimator (2.5.1)
 
 DEPENDENCIES:
   - Pulsator
+  - ViewAnimator
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Pulsator
+    - ViewAnimator
 
 SPEC CHECKSUMS:
   Pulsator: d58707c6827ec862cd89fd727424866795dabd24
+  ViewAnimator: 173932c659a43c5a15c665878750d92801ae2cf1
 
-PODFILE CHECKSUM: e785006c078215564390d9f47350f082855cef9c
+PODFILE CHECKSUM: 81ca3ff9521ba7a3496b62b78d8eaab535ac1d34
 
 COCOAPODS: 1.6.1

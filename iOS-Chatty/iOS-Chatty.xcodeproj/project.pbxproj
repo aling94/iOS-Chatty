@@ -291,12 +291,14 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-Chatty/Pods-iOS-Chatty-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Pulsator/Pulsator.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pulsator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

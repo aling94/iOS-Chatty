@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CoreBluetooth
+import ViewAnimator
 
 class ChatVC: UIViewController {
 
@@ -40,8 +41,11 @@ class ChatVC: UIViewController {
             if lastRow > 0 {
                 self.table?.scrollToRow(at: IndexPath(row: lastRow, section: 0), at: .bottom, animated: false)
             }
+            let anim = AnimationType.from(direction: .bottom, offset: 30.0)
+            UIView.animate(views: self.table.visibleCells,
+                           animations: [anim],
+                           duration: 0.8)
         }
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
