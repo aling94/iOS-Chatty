@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Pulsator
 
 class UserListVC: UIViewController {
     
@@ -14,9 +15,11 @@ class UserListVC: UIViewController {
     @IBOutlet weak var chatBtn: UIButton!
     @IBOutlet weak var chatAllBtn: UIButton!
     @IBOutlet weak var notice: UILabel!
+    @IBOutlet weak var signalImage: UIImageView!
     
     var dm: DeviceManager!
     var selectedItems: Set<IndexPath> = []
+    let pulsator = Pulsator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +28,8 @@ class UserListVC: UIViewController {
         dm.begin()
         toggleNotice()
         toggleChatAll()
+        setupPulsator()
+        togglePulsator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,11 +38,27 @@ class UserListVC: UIViewController {
         navigationItem.title = User.current.name
         toggleChatBtn(enabled: false)
         dm.updateAdvertisingData()
+        reloadNotices()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         deselectAll()
+        pulsator.stop()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.layer.layoutIfNeeded()
+        pulsator.position = signalImage.layer.position
+    }
+    
+    func setupPulsator() {
+        pulsator.backgroundColor = UIColor.white.cgColor
+        pulsator.radius = view.frame.width * 0.6
+        pulsator.animationDuration = 10
+        pulsator.numPulse = 5
+        signalImage.layer.superlayer?.insertSublayer(pulsator, below: signalImage.layer)
     }
     
     func toggleNotice() {
@@ -54,6 +75,17 @@ class UserListVC: UIViewController {
     func toggleChatBtn(enabled: Bool) {
         chatBtn.isEnabled = enabled
         chatBtn.backgroundColor = enabled ? .lightGreen : .lightGray
+    }
+    
+    func togglePulsator() {
+        let hasUsers = dm.deviceCount > 0
+        signalImage.isHidden = hasUsers
+        if !hasUsers && !pulsator.isPulsating {
+            pulsator.start()
+        } else if hasUsers {
+            pulsator.stop()
+        }
+        
     }
     
     @IBAction func chatTapped(_ sender: Any) {
@@ -86,11 +118,12 @@ class UserListVC: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func reload() {
+    func reloadNotices() {
         DispatchQueue.main.async {
             self.collection.reloadData()
             self.toggleNotice()
             self.toggleChatAll()
+            self.togglePulsator()
         }
     }
 }
@@ -99,7 +132,7 @@ class UserListVC: UIViewController {
 extension UserListVC: DeviceManagerDelegate {
     
     func deviceManager(didAddNewPeripheral: Device) {
-        reload()
+        reloadNotices()
     }
     
     func deviceManagerDidUpdateDeviceDesc(at index: Int) {
@@ -113,7 +146,7 @@ extension UserListVC: DeviceManagerDelegate {
     }
     
     func deviceManagerDidReload() {
-        reload()
+        reloadNotices()
     }
 }
 
