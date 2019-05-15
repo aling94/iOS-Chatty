@@ -65,9 +65,9 @@ final class DeviceManager: NSObject {
             peripheralManager.stopAdvertising()
         }
 
-        let advertisementData = ChattyBLE.advertisement
+        let advertisementData = ChatService.advertisement
         
-        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID], CBAdvertisementDataLocalNameKey: advertisementData])
+        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[ChatService.uuid], CBAdvertisementDataLocalNameKey: advertisementData])
     }
     
     private func addOrUpdatePeripheralList(device: Device, list: inout [Device]) {
@@ -106,7 +106,7 @@ extension DeviceManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
-            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID],
+            central.scanForPeripherals(withServices: [ChatService.uuid],
                                        options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
         }
     }

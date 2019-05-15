@@ -68,10 +68,10 @@ class ChatManager: NSObject {
             peripheralManager.stopAdvertising()
         }
         
-        let advertisementData = ChattyBLE.advertisement
+        let advertisementData = ChatService.advertisement
         
         let advertisement: [String : Any] = [
-            CBAdvertisementDataServiceUUIDsKey:[ChattyBLE.serviceUUID],
+            CBAdvertisementDataServiceUUIDsKey:[ChatService.uuid],
             CBAdvertisementDataLocalNameKey: advertisementData
         ]
         
@@ -80,20 +80,13 @@ class ChatManager: NSObject {
     
     
     func initService() {
-        
-        let serialService = CBMutableService(type: ChattyBLE.serviceUUID, primary: true)
-        let rx = CBMutableCharacteristic(type: ChattyBLE.Characteristics.uuid,
-                                         properties: ChattyBLE.Characteristics.properties, value: nil,
-                                         permissions: ChattyBLE.Characteristics.permissions)
-        serialService.characteristics = [rx]
-        
-        peripheralManager.add(serialService)
+        peripheralManager.add(ChatService.service)
     }
     
     func shouldAcceptPeripheral(advertisement: [String : Any], peripheral: CBPeripheral) -> Bool {
         guard let uuids = advertisement[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
             let serviceUUID = uuids.first,
-            serviceUUID == ChattyBLE.serviceUUID else { return false }
+            serviceUUID == ChatService.uuid else { return false }
         return filter.isEmpty || filter.contains(peripheral.identifier)
     }
     
@@ -109,7 +102,7 @@ extension ChatManager : CBCentralManagerDelegate {
         
         if (central.state == .poweredOn) {
             
-            central.scanForPeripherals(withServices: [ChattyBLE.serviceUUID],
+            central.scanForPeripherals(withServices: [ChatService.uuid],
                                        options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
         }
@@ -122,7 +115,7 @@ extension ChatManager : CBCentralManagerDelegate {
             let adName = advertisementData[CBAdvertisementDataLocalNameKey] as? String else { return }
         
         let components = adName.components(separatedBy: "|")
-        if components.count == ChattyBLE.advertNumComponents {
+        if components.count == ChatService.advertNumComponents {
             peripheralSet.insert(peripheral)
             if deviceMap[peripheral.identifier.uuidString] != nil {
                 deviceMap[peripheral.identifier.uuidString]!.user.name = components[0]
@@ -159,7 +152,7 @@ extension ChatManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for characteristic in service.characteristics! {
             let characteristic = characteristic as CBCharacteristic
-            if (characteristic.uuid.isEqual(ChattyBLE.Characteristics.uuid)) {
+            if (characteristic.uuid.isEqual(ChatService.chatChannel.uuid)) {
                 guard !messageInput.isEmpty else { return }
                 let data = messageInput.data(using: .utf8)
                 peripheral.writeValue(data!, for: characteristic, type: CBCharacteristicWriteType.withResponse)

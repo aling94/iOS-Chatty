@@ -24,7 +24,7 @@ struct Device {
     
     mutating func update(desc: String) {
         let advertisementData = desc.components(separatedBy: "|")
-        if (advertisementData.count == ChattyBLE.advertNumComponents) {
+        if (advertisementData.count == ChatService.advertNumComponents) {
             self.desc = desc
             user.name = advertisementData[0]
             user.avatarID = Int(advertisementData[1]) ?? 0

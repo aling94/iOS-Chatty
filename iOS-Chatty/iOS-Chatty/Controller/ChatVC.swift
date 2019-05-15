@@ -23,12 +23,25 @@ class ChatVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = cm.chatName
-        toggleSendBtn(enabled: false)
+        cm.begin()
+        
         frc = cm.messageFRC(delegate: self)
         try? frc.performFetch()
-        cm.begin()
+        toggleSendBtn(enabled: false)
         hideKeyboardOnScreenTap()
         observeKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        table.reloadData()
+        let lastRow = table.numberOfRows(inSection: 0) - 1
+        DispatchQueue.main.async {
+            if lastRow > 0 {
+                self.table?.scrollToRow(at: IndexPath(row: lastRow, section: 0), at: .bottom, animated: false)
+            }
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
