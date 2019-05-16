@@ -36,15 +36,15 @@
 		5E155E557D27478D178A3520 /* Pods_iOS_Chatty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Chatty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7444D21C5387D2CEF8D0E1C6 /* Pods-iOS-Chatty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Chatty.debug.xcconfig"; path = "Target Support Files/Pods-iOS-Chatty/Pods-iOS-Chatty.debug.xcconfig"; sourceTree = "<group>"; };
 		DCC817A776CCFAFFC73A9EFE /* Pods-iOS-Chatty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Chatty.release.xcconfig"; path = "Target Support Files/Pods-iOS-Chatty/Pods-iOS-Chatty.release.xcconfig"; sourceTree = "<group>"; };
-		E1481A392287726000E42110 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = SOURCE_ROOT; };
+		E1481A392287726000E42110 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaddedLabel.swift; path = "iOS-Chatty/View/PaddedLabel.swift"; sourceTree = SOURCE_ROOT; };
 		E1481A3D2287743300E42110 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
-		E187C126228677E00022B49D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = SOURCE_ROOT; };
-		E187C1282286A4D20022B49D /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = SOURCE_ROOT; };
-		E1B8CB6822872C9C006A3B20 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = SOURCE_ROOT; };
-		E1B8CB6A22873BBF006A3B20 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = SOURCE_ROOT; };
-		E1B8CB6C22873BEE006A3B20 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = SOURCE_ROOT; };
+		E187C126228677E00022B49D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = "iOS-Chatty/Model/DataManager.swift"; sourceTree = SOURCE_ROOT; };
+		E187C1282286A4D20022B49D /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeviceManager.swift; path = "iOS-Chatty/Model/DeviceManager.swift"; sourceTree = SOURCE_ROOT; };
+		E1B8CB6822872C9C006A3B20 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatManager.swift; path = "iOS-Chatty/Model/ChatManager.swift"; sourceTree = SOURCE_ROOT; };
+		E1B8CB6A22873BBF006A3B20 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = "iOS-Chatty/View/ChatCell.swift"; sourceTree = SOURCE_ROOT; };
+		E1B8CB6C22873BEE006A3B20 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = "iOS-Chatty/View/UserCell.swift"; sourceTree = SOURCE_ROOT; };
 		E1F0E19022886BF000703670 /* AvatarPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerVC.swift; sourceTree = "<group>"; };
-		E1F0E19222887C2E00703670 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCell.swift; path = "iOS-Chatty/Controller/ImageCell.swift"; sourceTree = SOURCE_ROOT; };
+		E1F0E19222887C2E00703670 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCell.swift; path = "iOS-Chatty/View/ImageCell.swift"; sourceTree = SOURCE_ROOT; };
 		E1F0E194228880C800703670 /* ImageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViews.swift; sourceTree = "<group>"; };
 		E1F0E196228883BB00703670 /* ViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers.swift; sourceTree = "<group>"; };
 		E1FFA92A2285E2DC00859A52 /* iOS-Chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Chatty.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,8 +58,8 @@
 		E1FFA94B2286241D00859A52 /* UserListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
 		E1FFA94D2286243900859A52 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		E1FFA94F2286246100859A52 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		E1FFA955228627CE00859A52 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = SOURCE_ROOT; };
-		E1FFA9572286284100859A52 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
+		E1FFA955228627CE00859A52 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Device.swift; path = "iOS-Chatty/Model/Device.swift"; sourceTree = SOURCE_ROOT; };
+		E1FFA9572286284100859A52 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "iOS-Chatty/Model/User.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,6 @@
 				7444D21C5387D2CEF8D0E1C6 /* Pods-iOS-Chatty.debug.xcconfig */,
 				DCC817A776CCFAFFC73A9EFE /* Pods-iOS-Chatty.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -110,6 +109,29 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E195B719228D16F300A0DD65 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E1FFA955228627CE00859A52 /* Device.swift */,
+				E1FFA9572286284100859A52 /* User.swift */,
+				E187C126228677E00022B49D /* DataManager.swift */,
+				E187C1282286A4D20022B49D /* DeviceManager.swift */,
+				E1B8CB6822872C9C006A3B20 /* ChatManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E195B71A228D173800A0DD65 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E1B8CB6A22873BBF006A3B20 /* ChatCell.swift */,
+				E1B8CB6C22873BEE006A3B20 /* UserCell.swift */,
+				E1481A392287726000E42110 /* PaddedLabel.swift */,
+				E1F0E19222887C2E00703670 /* ImageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E1FFA9212285E2DC00859A52 = {
 			isa = PBXGroup;
 			children = (
@@ -135,8 +157,8 @@
 				E1FFA9442285E38A00859A52 /* AppDelegate */,
 				E1FFA9432285E38300859A52 /* Storyboards */,
 				E1FFA9472285E3B500859A52 /* Controller */,
-				E1FFA9462285E3B000859A52 /* View */,
-				E1FFA9452285E3A500859A52 /* Model */,
+				E195B71A228D173800A0DD65 /* View */,
+				E195B719228D16F300A0DD65 /* Model */,
 				E1FFA9422285E36D00859A52 /* Support */,
 			);
 			path = "iOS-Chatty";
@@ -168,29 +190,6 @@
 				E1FFA92D2285E2DC00859A52 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
-			sourceTree = "<group>";
-		};
-		E1FFA9452285E3A500859A52 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E1FFA955228627CE00859A52 /* Device.swift */,
-				E1FFA9572286284100859A52 /* User.swift */,
-				E187C126228677E00022B49D /* DataManager.swift */,
-				E187C1282286A4D20022B49D /* DeviceManager.swift */,
-				E1B8CB6822872C9C006A3B20 /* ChatManager.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		E1FFA9462285E3B000859A52 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E1B8CB6A22873BBF006A3B20 /* ChatCell.swift */,
-				E1B8CB6C22873BEE006A3B20 /* UserCell.swift */,
-				E1481A392287726000E42110 /* PaddedLabel.swift */,
-				E1F0E19222887C2E00703670 /* ImageCell.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		E1FFA9472285E3B500859A52 /* Controller */ = {
